@@ -13,11 +13,34 @@ cseg at 0			; tells the assembler to place the first
 	mov 0x91,#0		; set Port 1 to bi-directional
 	mov 0x84,#0		; set Port 0 to bi-directional
 loop:				; label for the sjmp instruction
-	mov c,UP_SWITCH		; move SW1 to red LED1
-	mov LED_BIT_0,c		;
-	mov LED_BIT_1,c		;
-	mov c,DOWN_SWITCH
-	mov LED_BIT_2,c		;
-	mov LED_BIT_3,c		;
-	sjmp loop
+	jb UP_SWITCH,skip_inc  ; skips over increment if up switch not pressed
+	lcall increment		; 
+skip_inc:			;
+	jb DOWN_SWITCH,skip_dec;
+	lcall decrement		;
+skip_dec:			;
+	sjmp loop		;
+
+;start of increment subroutine
+increment:			;
+	
+inc_debounce:			;
+	jb UP_SWITCH,inc_debounce;
+
+	ret			;
+;end of increment subroutine
+
+;start of decrement subroutine
+decrement:			;
+
+dec_debounce:			;
+	jb DOWN_SWITCH,dec_debounce;
+	ret			;
+;end of decrement subroutine
+
+;start of buzz subroutine
+buzz:				;
+	ret			;
+;end of buzz subroutine
+
 end

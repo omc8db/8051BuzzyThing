@@ -10,23 +10,25 @@
  DaveTm { 0,0,0,0,0,0,0,0 }
 
 Target (Target 1), 0x0000 // Tools: 'MCS-51'
-GRPOPT 1,(Source Group 1),0,0,0
+GRPOPT 1,(Source Group 1),1,0,0
 
+OPTFFF 1,1,2,0,0,1,20,0,<.\project_source.asm><project_source.asm> { 44,0,0,0,2,0,0,0,3,0,0,0,255,255,255,255,255,255,255,255,248,255,255,255,226,255,255,255,125,0,0,0,125,0,0,0,234,1,0,0,238,1,0,0 }
 
+ExtF <.\Example_1.asm> 1,12,0,{ 44,0,0,0,0,0,0,0,1,0,0,0,255,255,255,255,255,255,255,255,248,255,255,255,226,255,255,255,14,0,0,0,14,0,0,0,179,1,0,0,32,1,0,0 }
 
 TARGOPT 1, (Target 1)
  CLK51=12000000
-  OPTTT 0,1,1,0
+  OPTTT 1,1,1,0
   OPTHX 0,65535,0,0,0
   OPTLX 120,65,8,<.\>
   OPTLT 1,1,1,0,1,1,0,1,0,0,0
   OPTXL 1,1,1,1,1,1,1,0,0
-  OPTFL 0,0,1
+  OPTFL 1,0,1
   OPTBL 0,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
   OPTBL 1,(MCS 51 Instruction Set)<DATASHTS\INTEL\ISM51.PDF>
   OPTDL (S8051.DLL)()(DP51.DLL)(-p51)(S8051.DLL)()(TP51.DLL)(-p51)
   OPTDBG 509,0,()()()()()()()()()() ()()()()
-  OPTDF 0x0
+  OPTDF 0x80
   OPTLE <>
   OPTLC <>
 EndOpt
