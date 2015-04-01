@@ -1,7 +1,7 @@
 ;#include <reg932.inc>
 #define BUZZER_PIN p1.7
-#define UP_SWITCH p2.0
-#define DOWN_SWITCH p0.1
+#define UP_SWITCH p0.1
+#define DOWN_SWITCH p2.0
 #define LED_BIT_0 p2.4
 #define LED_BIT_1 p0.6
 #define LED_BIT_2 p0.5
@@ -24,17 +24,18 @@ skip_dec:			;
 ;start of increment subroutine
 increment:			;
 	
-inc_debounce:			;
-	jb UP_SWITCH,inc_debounce;
-
+inc_no_release:			;
+	jnb UP_SWITCH,inc_no_release;
+	setb LED_BIT_0		;
 	ret			;
 ;end of increment subroutine
 
 ;start of decrement subroutine
 decrement:			;
 
-dec_debounce:			;
-	jb DOWN_SWITCH,dec_debounce;
+dec_no_release:			;
+	jnb DOWN_SWITCH,dec_no_release;
+	clr LED_BIT_0		;
 	ret			;
 ;end of decrement subroutine
 
