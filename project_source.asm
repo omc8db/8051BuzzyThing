@@ -1,17 +1,23 @@
-;#include <reg932.inc>
-#define BUZZER_PIN p1.7
-#define UP_SWITCH p0.1
-#define DOWN_SWITCH p2.0
-#define LED_BIT_0 p2.4
-#define LED_BIT_1 p0.6
-#define LED_BIT_2 p0.5
-#define LED_BIT_3 p1.6
+#include <reg932.h>
+#include <simon2.h>
+
+#define UP_SWITCH SW4
+#define DOWN_SWITCH SW1
+#define LED_BIT_0 LED1_RED
+#define LED_BIT_1 LED2_AMB
+#define LED_BIT_2 LED4_YEL
+#define LED_BIT_3 LED5_RED
+#define COUNT_REGISTER R2
 
 cseg at 0			; tells the assembler to place the first
 				; instruction at address 0
-	mov 0xA4,#0		; set Port 2 to bi-directional
-	mov 0x91,#0		; set Port 1 to bi-directional
-	mov 0x84,#0		; set Port 0 to bi-directional
+setup:
+	mov P2M1,#0		; set Port 2 to bi-directional
+	mov P1M1,#0		; set Port 1 to bi-directional
+	mov P0M1,#0		; set Port 0 to bi-directional
+
+	mov COUNT_REGISTER,#0	; Initialize count to 0
+
 loop:				; label for the sjmp instruction
 	jb UP_SWITCH,skip_inc  ; skips over increment if up switch not pressed
 	lcall increment		; 
@@ -43,5 +49,4 @@ dec_no_release:			;
 buzz:				;
 	ret			;
 ;end of buzz subroutine
-
 end
