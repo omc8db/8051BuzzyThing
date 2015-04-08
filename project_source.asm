@@ -36,10 +36,10 @@ setup:				;
 loop:				; label for the sjmp instruction
 	jb UP_SWITCH,skip_inc  	; allows increment to be called if switch is pressed
 	lcall increment		; 
-skip_inc:			;
+ skip_inc:			;
 	jb DOWN_SWITCH,skip_dec	; allows decrement to be called if switch is pressed
 	lcall decrement		;
-skip_dec:			;
+ skip_dec:			;
 	sjmp loop		;
 
 
@@ -47,7 +47,7 @@ skip_dec:			;
 ;start of increment subroutine
 increment:			;
 	lcall debounce_delay		; Delay to debounce
-	inc_no_release:		;
+ inc_no_release:		; wait for button to be released
 	jnb UP_SWITCH,inc_no_release;
 
 	;Increment
@@ -60,10 +60,10 @@ increment:			;
 	ANL A, #10h		; Check the fifth bit for overflow
 	jz inc_no_overflow	;
 	lcall buzz		;
-	mov COUNT_REGISTER,#0	; Reset the counter
+	mov COUNT_REGISTER,#0	; Reset the counter to 0
 
 	
-	inc_no_overflow:	;
+ inc_no_overflow:	;
 	
 	;more debouncing
 	lcall debounce_delay	;
@@ -75,7 +75,7 @@ increment:			;
 ;start of decrement subroutine
 decrement:			;
 	lcall debounce_delay	;
-	dec_no_release:		;
+ dec_no_release:		;
 	jnb DOWN_SWITCH,dec_no_release;
 	clr LED_BIT_0		;
 
@@ -85,6 +85,15 @@ decrement:			;
 	lcall led_display_count	;
 
 	;check for overflow
+	MOV A,COUNT_REGISTER	;
+	ANL A, #80h		; Check the eighth bit for overflow
+	jz dec_no_overflow	;
+	lcall buzz		;
+	mov COUNT_REGISTER,#15	; Reset the counter to 15
+
+	
+ dec_no_overflow:	;
+	
 
 	;more debouncing
 	lcall debounce_delay	;
@@ -104,9 +113,9 @@ buzz:				;
 ;start of debounce_delay subroutine
 debounce_delay:
 	mov R4,#DEBOUNCE_DELAY_CYCLES	;
-debounce_delay_loop0:
+ debounce_delay_loop0:
 	mov R3,#DEBOUNCE_DELAY_CYCLES	;
-debounce_delay_loop1:		;
+ debounce_delay_loop1:		;
 	djnz R3,debounce_delay_loop1;
 	djnz R4,debounce_delay_loop0;
 	ret			;
@@ -123,36 +132,36 @@ led_display_count:			;
 	jz bit0_off_jmp	;  
 	clr LED_BIT_0		;
 	sjmp bit0_on_jmp	; 
-bit0_off_jmp:			;
+ bit0_off_jmp:			;
 	setb LED_BIT_0		;
-bit0_on_jmp:			;
+ bit0_on_jmp:			;
 
 	mov A, COUNT_REGISTER	;
 	anl A, #02h		; //Get the second bit of count
 	jz bit1_off_jmp	;  
 	clr LED_BIT_1		;
 	sjmp bit1_on_jmp	; 
-bit1_off_jmp:			;
+ bit1_off_jmp:			;
 	setb LED_BIT_1		;
-bit1_on_jmp:			;
+ bit1_on_jmp:			;
 
 	mov A, COUNT_REGISTER	;
 	anl A, #04h		; //Get the third bit of count
 	jz bit2_off_jmp	;  
 	clr LED_BIT_2		;
 	sjmp bit2_on_jmp	; 
-bit2_off_jmp:			;
+ bit2_off_jmp:			;
 	setb LED_BIT_2		;
-bit2_on_jmp:			;
+ bit2_on_jmp:			;
 	
 	mov A, COUNT_REGISTER	;
 	anl A, #08h		; //Get the fourth bit of count
 	jz bit3_off_jmp	;  
 	clr LED_BIT_3		;
 	sjmp bit3_on_jmp	; 
-bit3_off_jmp:			;
+ bit3_off_jmp:			;
 	setb LED_BIT_3		;
-bit3_on_jmp:			;
+ bit3_on_jmp:			;
 
 	ret			;
 ;end of count_output subroutine
