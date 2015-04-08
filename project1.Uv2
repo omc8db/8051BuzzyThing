@@ -56,7 +56,7 @@ Options 1,0,0  // Target 'Target 1'
  C51DEF ()
  C51UDF ()
  INCC5 ()
- AX51FL=4
+ AX51FL=68
  AX51MSC ()
  AX51SET ()
  AX51RST ()
