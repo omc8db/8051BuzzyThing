@@ -32,18 +32,49 @@ setup:				;
 	mov P2M1,#0		; set Port 2 to bi-directional
 	mov P1M1,#0		; set Port 1 to bi-directional
 	mov P0M1,#0		; set Port 0 to bi-directional
-	MOV TMOD,#0x01		; sets TIMER 0 into mode 1 operation 
 	mov COUNT_REGISTER,#0	; Initialize count to 0
+
+	lcall transition_left	;
 
 loop:				; label for the sjmp instruction
 	jb UP_SWITCH,skip_inc  	; allows increment to be called if switch is pressed
 	lcall increment		; 
  skip_inc:			;
+
 	jb DOWN_SWITCH,skip_dec	; allows decrement to be called if switch is pressed
 	lcall decrement		;
  skip_dec:			;
+
+ 	jb MALICK_BUTTON,skip_malick	; 
+	lcall transition_left   ;
+	lcall malick_feature	;
+	lcall transition_right	;
+	lcall led_display_count	;
+ skip_malick:			;
+
+ 
+ 	jb OWEN_BUTTON,skip_owen	; 
+	lcall transition_left		;
+	lcall owen_feature	;
+	lcall transition_right	;
+	lcall led_display_count	;
+ skip_owen:			;
 	sjmp loop		;
 
+	
+ 	jb JUDAH_BUTTON,skip_judah	; 
+	lcall transition_left		;
+	lcall judah_feature	;
+	lcall transition_right	;
+	lcall led_display_count	;
+ skip_judah:			;
+ 
+ 	jb DRUE_BUTTON,skip_drue	; 
+	lcall transition_left		;
+	lcall drue_feature	;
+	lcall transition_right	;
+	lcall led_display_count	;
+ skip_drue:			;
 
 
 ;start of increment subroutine
@@ -114,7 +145,7 @@ buzz:
 	lcall buzz_delay	;
  djnz R3, buzzer_loop	;
 	ret			;
-;end of buzz subroutine
+
 
 buzz_delay:
 	mov R5, #21			;
@@ -124,7 +155,9 @@ buzz_delay:
   djnz R6, buzz_delay_inner	;
  djnz R5, buzz_delay_outer	;
  	ret				;
-	
+;end of buzz subroutine
+
+
 
 ;start of debounce_delay subroutine
 debounce_delay:
@@ -142,7 +175,7 @@ debounce_delay:
 ;start of led_display_count subroutine
 led_display_count:			;
 	mov A, COUNT_REGISTER	;
-	anl A, #01h		; //Get the lsb of count
+	anl A, #01h		; //Get the first bit (LSB) of count
 	;A is nonzero if the bit we want is nonzero
 	; Otherwise, A is the value of the bit
 	jz bit0_off_jmp	;  
@@ -171,7 +204,7 @@ led_display_count:			;
  bit2_on_jmp:			;
 	
 	mov A, COUNT_REGISTER	;
-	anl A, #08h		; //Get the fourth bit of count
+	anl A, #08h		; //Get the fourth bit (MSB) of count
 	jz bit3_off_jmp	;  
 	clr LED_BIT_3		;
 	sjmp bit3_on_jmp	; 
@@ -180,6 +213,109 @@ led_display_count:			;
  bit3_on_jmp:			;
 
 	ret			;
-;end of count_output subroutine
-   
+;end of led_display_count subroutine
+
+;start of third_sec_delay function
+third_sec_delay:		;
+
+	mov R4,#10		;
+ tsd_loop0:			;
+	mov R5,#255		;
+  tsd_loop1:			;
+	mov R6,#255		;
+   tsd_loop2:			;
+	djnz R6,tsd_loop2	;
+	djnz R5,tsd_loop1	;
+	djnz R4,tsd_loop0	;
+	ret;
+;end of third_sec_delay
+
+;start of transition_right
+transition_right:		;
+
+	lcall col1_on		;
+	lcall third_sec_delay	;
+	lcall col2_on		;
+	lcall third_sec_delay	;
+	lcall col1_off		;
+	lcall col3_on		;
+	lcall third_sec_delay	;
+	lcall col2_off		;
+	lcall third_sec_delay	;
+	lcall col3_off		;
+	
+	ret			;
+;end of transition_right
+
+;start of transition_left
+transition_left:		;
+	lcall col3_on		;
+	lcall third_sec_delay	;
+	lcall col2_on		;
+	lcall third_sec_delay	;
+	lcall col3_off		;
+	lcall col1_on		;
+	lcall third_sec_delay	;
+	lcall col2_off		;
+	lcall third_sec_delay	;
+	lcall col1_off		;
+	
+	ret			;
+;end of transition_left
+
+;start of column functions
+col1_on:			;
+	clr LED1_RED		;
+	clr LED2_AMB		;
+	clr LED3_YEL		;
+	ret			;
+col1_off:			;
+	setb LED1_RED		;
+	setb LED2_AMB		;
+	setb LED3_YEL		;
+	ret			;
+col2_on:			;
+	clr LED4_YEL		;
+	clr LED5_RED		;
+	clr LED6_GRN		;
+	ret			;
+col2_off:			;
+	setb LED4_YEL		;
+	setb LED5_RED		;
+	setb LED6_GRN		;
+	ret			;
+col3_on:			;
+	clr LED7_GRN		;
+	clr LED8_RED		;
+	clr LED9_AMB		;
+	ret			;
+col3_off:
+	setb LED7_GRN		;
+	setb LED8_RED		;
+	setb LED9_AMB		;
+	ret			;
+;end of column functions
+
+
+
+;start of malick_feature
+malick_feature:			;
+	ret			;
+;end of malick_feature
+
+;start of owen_feature
+owen_feature:			;
+	ret			;
+;end of owen_feature
+
+;start of judah_feature		;
+judah_feature:
+	ret			;
+;end of judah_feature		;
+
+;start of drue_feature		;
+drue_feature:
+	ret			;
+;end of drue_feature		;
+
 end
