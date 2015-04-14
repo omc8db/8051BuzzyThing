@@ -59,7 +59,6 @@ loop:				; label for the sjmp instruction
 	lcall transition_right	;
 	lcall led_display_count	;
  skip_owen:			;
-	sjmp loop		;
 
 	
  	jb JUDAH_BUTTON,skip_judah	; 
@@ -76,6 +75,7 @@ loop:				; label for the sjmp instruction
 	lcall led_display_count	;
  skip_drue:			;
 
+	sjmp loop		;
 
 ;start of increment subroutine
 increment:			;
