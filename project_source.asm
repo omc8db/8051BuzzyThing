@@ -294,6 +294,17 @@ col3_off:
 	setb LED8_RED		;
 	setb LED9_AMB		;
 	ret			;
+clr_screen:
+	setb LED1_RED		;
+	setb LED2_AMB		;
+	setb LED3_YEL		;
+	setb LED4_YEL		;
+	setb LED5_RED		;
+	setb LED6_GRN		;
+	setb LED7_GRN		;
+	setb LED8_RED		;
+	setb LED9_AMB		;
+	ret			;
 ;end of column functions
 
 
@@ -305,6 +316,77 @@ malick_feature:			;
 
 ;start of owen_feature
 owen_feature:			;
+
+	;output 'O'
+	clr LED1_RED		;
+	clr LED2_AMB		;
+	clr LED3_YEL		;
+	clr LED4_YEL		;
+	setb LED5_RED		;
+	clr LED6_GRN		;
+	clr LED7_GRN		;
+	clr LED8_RED		;
+	clr LED9_AMB		;
+
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall clr_screen	;
+	lcall third_sec_delay	;
+
+	;output 'W'
+	clr LED1_RED		;
+	clr LED2_AMB		;
+	clr LED3_YEL		;
+	setb LED4_YEL		;
+	clr LED5_RED		;
+	clr LED6_GRN		;
+	clr LED7_GRN		;
+	clr LED8_RED		;
+	clr LED9_AMB		;
+
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall clr_screen	;
+	lcall third_sec_delay	;
+	
+	;output 'E'
+	clr LED1_RED		;
+	clr LED2_AMB		;
+	clr LED3_YEL		;
+	clr LED4_YEL		;
+	clr LED5_RED		;
+	clr LED6_GRN		;
+	clr LED7_GRN		;
+	setb LED8_RED		;
+	clr LED9_AMB		;
+
+
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall clr_screen	;
+	lcall third_sec_delay	;		
+
+	;output 'N'
+	clr LED1_RED		;
+	clr LED2_AMB		;
+	clr LED3_YEL		;
+	clr LED4_YEL		;
+	setb LED5_RED		;
+	setb LED6_GRN		;
+	clr LED7_GRN		;
+	clr LED8_RED		;
+	clr LED9_AMB		;
+
+
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall third_sec_delay	;
+	lcall clr_screen	;
+	lcall third_sec_delay	;
+	
 	ret			;
 ;end of owen_feature
 
