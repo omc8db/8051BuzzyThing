@@ -148,7 +148,7 @@ buzz:
 
 
 buzz_delay:
-	mov R5, #21			;
+	mov R5, #7			;
  buzz_delay_outer:
  	mov R6, #255			;
   buzz_delay_inner:				
