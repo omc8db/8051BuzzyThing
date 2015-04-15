@@ -295,15 +295,14 @@ col3_off:
 	setb LED9_AMB		;
 	ret			;
 clr_screen:
-	setb LED1_RED		;
-	setb LED2_AMB		;
-	setb LED3_YEL		;
-	setb LED4_YEL		;
-	setb LED5_RED		;
-	setb LED6_GRN		;
-	setb LED7_GRN		;
-	setb LED8_RED		;
-	setb LED9_AMB		;
+	lcall col1_off		;
+	lcall col2_off		;
+	lcall col3_off		;
+	ret			;
+all_lights_on:
+	lcall col1_on		;
+	lcall col2_on		;
+	lcall col3_on		;
 	ret			;
 ;end of column functions
 
