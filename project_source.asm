@@ -33,7 +33,8 @@ cseg at 0				; tells the assembler to place the first
 ljmp setup				; jumps over the interrupt vector table (0x0003 to 0x0073)
 
 cseg at 0x000B				; interrupt vector address for TIMER_0
- 		lcall timer_0_isr	; jumps to the timer 0 interrupt subroutine
+
+ 	lcall buzz_timer_at_freq_isr	; jumps to the timer 0 interrupt subroutine
 	reti				; returns from the interrupt		
 
 ;//end Judah Timer Interrupt
@@ -324,9 +325,15 @@ judah_feature:
 
 ;//this feature plays the Nintendo classic Mario Bros intro ditty on the buzzer speaker
 
-;//R3 set the length of note. At (7.373 MHz/2) 16 = eighth note, 32 = quarter note, 64 = half note
+;//R3 sets the length of note
 
-;//R4 (upper byte) and R5 (lower byte)  set the tempo of the song. At (7.373 MHz/2) tempo = ? TODO;
+;//R3 = 1 -> 256th note at 120 BPM
+
+;//R3 = 256 -> quarter note at 120 BPM
+
+;//R3 = 1024 -> whole note at 120 BPM
+
+;//R4 (upper byte) and R5 (lower byte) sets the tempo of the song. We have hardcoded this to 120 BPM for now
 
 ;//R6 (upper byte) and R7 (lower byte) set the pitch of the note (as the re-load value for TIMER_0 pitch generator isr)
 
@@ -350,48 +357,258 @@ judah_feature:
 ;//Judah Main
 
 	nop				;
+
+	mov R3, #128			; sets the duration of the note
+	lcall buzzNoteC5		; buzz the note
+	lcall holdNote			; holdNote checks R3 of the duration (16 = eigth note buzz)
+	lcall pauseBetweenNote		;
+
 	nop				;
 
-	lcall buzzNoteE6		;buzz the note on E
-	mov R3, #16			;sets the duration for the eighth note
-	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note buzz)
+	mov R3, #128			;
+	lcall buzzNoteCsharp5		;
+	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	lcall buzzNoteC6		;buzz the note on E
-	mov R3, #16			;sets the duration for the eighth note
-	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note buzz)
+	nop				;
+	
+	mov R3, #128			;
+	lcall restNote			;
+	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	lcall restNote			;rest
-	mov R3, #16			;sets the duration for the eighth note
-	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note rest)
+	mov R3, #128			;
+	lcall buzzNoteD5		;
+	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	lcall buzzNoteE6		;buzz the note on E
-	mov R3, #32			;sets the duration for an eighth note
-	lcall holdNote			;holdNote checks R3 for the duration (32 = quarter note buzz)
+	mov R3, #128			;
+	lcall restNote			;
+	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	lcall restNote			;rest
-	mov R3, #32			;sets the duration for an eighth note
-	lcall holdNote			;holdNote checks R3 for the duration (32 = eigth note rest)
+	mov R3, #256			;
+	lcall buzzNoteCsharp5		;
+	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
 
-	lcall buzzNoteC6		;buzz the note on E
-	mov R3, #64			;sets the duration for an quarter note
-	lcall holdNote			;holdNote checks R3 for the duration (64 = quarter note buzz)
+	mov R3, #256			;
+	lcall restNote			;
+	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	clr TR0				; start TIMER_0 count
-	clr EA				; clr global interrupt enable bit
-	clr ET0				; clr TIMER_0 overflow interrupt
+	mov R3, #256			;
+	lcall buzzNoteC5		;
+	lcall holdNote			;
+	lcall pauseBetweenNote		;
+
+	clr TR0				; release TIMER_0 count
+	clr EA				; release global interrupt enable bit
+	clr ET0				; release TIMER_0 overflow interrupt
 
 ret
 
 ;//End Judah Main
 
 ;//Judah Subroutines
+
+buzz_timer_at_freq_isr:			
+
+		cpl BUZZER 		;compliment the BUZZER (P1.7) to drive the speaker
+
+		clr c			;DO I NEED THIS?
+
+		mov A, R6		;upper byte of 16-bit timer re-load value into A
+		mov TH0, A		;A into the upper byte of TIMER 0
+
+		mov A, R7		;lower byte of 16-bit timer re-load value into A
+		mov TL0, A		;A into the lower byte of TIMER 0
+
+ret					;
+
+;//End buzz_timer_at_freq_isr
+
+;//This function assumes each Intruction is is (7.3728MHz / 2) = 3.6864 Mhz -> 0.27127 microsec per inst
+
+;//We are hardcoding 120 BPM -> 500,000 microsec per quarter note pulse
+
+;//In order to handle subdivisions, we use 256th notes, i.e. -> 1953.125 microsec per two hundred fifty sixth note -> minimum hold
+
+holdNote:
+
+ loop0:
+	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
+ 
+  loop1:				
+	 mov R5, #244		;//Inner Loop is 488/2 = 244
+ 
+   loop2:				
+
+   djnz R5, loop2		;
+
+  djnz R4, loop1		;
+
+ djnz R3, loop0			;
+
+ret				;
+
+;//end holdNote 
+
+pauseBetweenNote:
+
+		mov R3, #1		;
+
+		mov R6, #0		; TIMER 0 re-load value is set to minimum
+		mov R7, #0		; 
+
+		lcall holdNote  	;
+	ret				;
+
+;//End pauseBetweenNote
+
+restNote:
+		mov R6, #0		; set TIMER 0 re-load value to minimum
+		mov R7, #0		;
+
+		clr TR0			; stops TIMER 0 to stop sound
+
+		lcall holdNote  	;
+
+		setb TR0		; restarts TIMER 0 
+	ret				;
+
+;//End restNote
+
+
+;//TODO Note Tables:
+
+;//These tables assume the timer is PCLK is (7.3728MHz / 2) = 3.6864 Mhz -> 0.27127 microsec per increment
+
+buzzNoteC5:				; C (fifth octave) 523.25 hz -> 1911 microSec - > /0.27127 = 7045 -> 3522 increments
+
+		mov R6, #0x0D		; high byte
+		mov R7, #0xC2		; low byte
+
+		lcall holdNote		;
+
+	ret				;
+
+buzzNoteCsharp5:			; 554.37 hz -> 3324 incs
+
+		mov R6, #0x0C		;
+		mov R7, #0xFC		;
+
+		lcall holdNote		;
+
+	ret				;
+
+buzzNoteD5:				; 587.33 hz -> 3138 incs
+
+		mov R6, #0x0C		;
+		mov R7, #0x42		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+buzzNoteDsharp5:			; 622.25 hz -> 2962
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;
+
+buzzNoteE5:				; 659.26 hz -> 2795
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+buzzNoteF5:				;  698.46 hz -> 2795
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;		
+				;
+
+
+buzzNoteFsharp5:			; 739.99 hz -> 
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;
+
+buzzNoteG5:				; buzzer gets music note E (sixth octave) 783.99 cycles per second
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				; //523.25 hz -> 1911 microSec - > /0.27127 = 7045 -> 3522 increments		
+				
+
+buzzNoteGsharp5:			;buzzer gets music note E (sixth octave) 830.61 cycles per second
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;
+
+buzzNoteA5:				;buzzer gets music note E (sixth octave) 880 cycles per second
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;		
+				;
+
+
+buzzNoteAsharp5:			;buzzer gets music note E (sixth octave) 932.33 cycles per second
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;
+
+buzzNoteB5:				;buzzer gets music note E (sixth octave) 987.77 cycles per second
+
+		mov R6, #?		;
+		mov R7, #?		;
+
+		lcall holdNote		;
+
+	ret				;		
+				;
+
+
+buzzNoteC6:				; 1046.50 hz -> -> 1760 increments
+		
+		mov R6, #0x06		; 
+		mov R7, #0xB8		; 
+		lcall holdNote		;
+                
+	ret				;
 
 buzzNoteE6:				;buzzer gets music note E (sixth octave) 1318.51 cycles per second
 
@@ -402,13 +619,6 @@ buzzNoteE6:				;buzzer gets music note E (sixth octave) 1318.51 cycles per secon
 
 	ret				;
 
-buzzNoteC6:				;buzzer gets music note C (sixth octave) 1046.50 cycles per second
-		
-		mov R6, #0xF2		;
-		mov R7, #0x3D		;
-		lcall holdNote		;
-                
-	ret				;
 
 buzzNoteG6:
     		mov R6, #0xF6		;
@@ -416,72 +626,6 @@ buzzNoteG6:
 		lcall holdNote		;
                 
 	ret				;
-
-;//TODO
-
-buzzNoteC5:					;buzzer gets music note C (sixth octave) 1046.50 cycles per second
-		
-		mov R6, #0x00		;//TODO
-		mov R7, #0x00		;//TOD0
-		lcall holdNote		;
-                
-	ret				;
-				
-pauseBetweenNote:
-
-		mov R3, #1	;
-
-		mov R6, #0	; TIMER 0 re-load value is set to minimum
-		mov R7, #0	; 
-		lcall holdNote  ;
-	ret			;
-
-
-restNote:
-		mov R6, #0	;TIMER 0 re-load value is set to minimum
-		mov R7, #0	;possible value.
-		clr TR0		;stops TIMER 0 to stop sound
-		lcall holdNote  ;
-		setb TR0	;restarts TIMER 0 for next note
-	ret			;
-
-;// Judah Subroutine hold_note
-
-holdNote:
-
- loop0:
-	mov R4, #100		;Hardcoded Tempo
- 
-  loop1:				
-	 mov R5, #255		;Hardcoded Tempo
- 
-   loop2:				
-	   nop			;
-
-   djnz R5, loop2		;
-
-  djnz R4, loop1		;
-
- djnz R3, loop0			;
-
-ret				;
-
-;//end hold_note 
-
-timer_0_isr:			
-
-		cpl BUZZER 		;compliment the BUZZER (P1.7) to drive the speaker
-
-		clr c			;DO I NEED THIS?
-
-		mov A, R6		;upper byte of 16-bit timer re-load value into A
-		mov TH0, A		;A into the upper byte of TIMER 0
-		mov A, R7		;lower byte of 16-bit timer re-load value into A
-		mov TL0, A		;A into the lower byte of TIMER 0
-
-ret					;//return from the isr
-
-;//End Judah timer_0_isr
 
 ;//End Judah Subroutines
 
