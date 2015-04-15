@@ -26,13 +26,23 @@
 #define COUNT_REGISTER R2
 ;R4-R7 available for other usage
 
-cseg at 0			; tells the assembler to place the first
-				; instruction at address 0
-setup:				;
-	mov P2M1,#0		; set Port 2 to bi-directional
-	mov P1M1,#0		; set Port 1 to bi-directional
-	mov P0M1,#0		; set Port 0 to bi-directional
-	mov COUNT_REGISTER,#0	; Initialize count to 0
+cseg at 0				; tells the assembler to place the first
+					; instruction at address 0
+;//Judah Timer Interrupt
+
+ljmp setup				; jumps over the interrupt vector table (0x0003 to 0x0073)
+
+cseg at 0x000B				; interrupt vector address for TIMER_0
+ 		lcall timer_0_isr	; jumps to the timer 0 interrupt subroutine
+	reti				; returns from the interrupt		
+
+;//end Judah Timer Interrupt
+
+setup:					;
+	mov P2M1,#0			; set Port 2 to bi-directional
+	mov P1M1,#0			; set Port 1 to bi-directional
+	mov P0M1,#0			; set Port 0 to bi-directional
+	mov COUNT_REGISTER,#0		; Initialize count to 0
 
 	lcall transition_left	;
 
@@ -308,10 +318,164 @@ owen_feature:			;
 	ret			;
 ;end of owen_feature
 
-;start of judah_feature		;
+;//Judah Feature 
+
 judah_feature:
+
+;//this feature plays the Nintendo classic Mario Bros intro ditty on the buzzer speaker
+
+;//R3 set the length of note. At (7.373 MHz/2) 16 = eighth note, 32 = quarter note, 64 = half note
+
+;//R4 (upper byte) and R5 (lower byte)  set the tempo of the song. At (7.373 MHz/2) tempo = ? TODO;
+
+;//R6 (upper byte) and R7 (lower byte) set the pitch of the note (as the re-load value for TIMER_0 pitch generator isr)
+
+;//A is reserved for use inside the (TIMER_O) pitch generator isr
+
+;//Judah Setup
+
+	mov TMOD, #0x01			; set TIMER_0 to mode 1 
+	mov TH0,  #0x00			; load upper 8 bits of TIMER_0 (init TIMER_0) 
+	mov TL0,  #0x00			; load lower 8 bits of TIMER_0 (init TIMER_0)
+	mov R6,   #0x00			; load the same 16-bits from TIMER_0 into R6 (to reload TIMER_0 each isr)
+	mov R7,   #0x00			; load the same 16-bits from TIMER_0 into R7 (to reload TIMER_0 each isr)
+
+	SETB EA				; set global interrupt enable bit
+	SETB ET0			; enable TIMER_0 overflow interrupt
+	SETB TR0			; start TIMER_0 count
+
+;//End Judah Setup
+
+;//Judah Main
+
+	nop				;
+	nop				;
+
+	lcall buzzNoteE6		;buzz the note on E
+	mov R3, #16			;sets the duration for the eighth note
+	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note buzz)
+	;//lcall pauseBetweenNote		;
+
+	lcall restNote			;rest
+	mov R3, #16			;sets the duration for the eighth note
+	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note rest)
+	;//lcall pauseBetweenNote		;
+
+	lcall buzzNoteE6		;buzz the note on E
+	mov R3, #32			;sets the duration for an eighth note
+	lcall holdNote			;holdNote checks R3 for the duration (32 = quarter note buzz)
+	;//lcall pauseBetweenNote		;
+
+	lcall restNote			;rest
+	mov R3, #32			;sets the duration for an eighth note
+	lcall holdNote			;holdNote checks R3 for the duration (32 = eigth note rest)
+	;//lcall pauseBetweenNote		;
+
+
+	lcall buzzNoteE6		;buzz the note on E
+	mov R3, #64			;sets the duration for an quarter note
+	lcall holdNote			;holdNote checks R3 for the duration (64 = quarter note buzz)
+	lcall pauseBetweenNote		;
+
+
+ret
+
+;//End Judah Main
+
+;//Judah Subroutines
+
+buzzNoteE6:				;buzzer gets music note E (sixth octave) 1318.51 cycles per second
+
+		mov R6, #0xF5		;
+		mov R7, #0x14		;
+
+		lcall holdNote		;
+
+	ret				;
+
+buzzNoteC6:				;buzzer gets music note C (sixth octave) 1046.50 cycles per second
+		
+		mov R6, #0xF2		;
+		mov R7, #0x3D		;
+		lcall holdNote		;
+                
+	ret				;
+
+buzzNoteG6:
+    		mov R6, #0xF6		;
+		mov R7, #0xD1		;
+		lcall holdNote		;
+                
+	ret				;
+
+;//TODO
+
+buzzNoteC5:					;buzzer gets music note C (sixth octave) 1046.50 cycles per second
+		
+		mov R6, #0x00		;//TODO
+		mov R7, #0x00		;//TOD0
+		lcall holdNote		;
+                
+	ret				;
+				
+pauseBetweenNote:
+
+		mov R3, #0x01	;
+		mov R6, #0x00	; TIMER 0 re-load value is set to minimum
+		mov R7, #0x00	; 
+		lcall holdNote  ;
 	ret			;
-;end of judah_feature		;
+
+
+restNote:
+		mov R6, #0x00	;TIMER 0 re-load value is set to minimum
+		mov R7, #0x00	;possible value.
+		clr TR0		;stops TIMER 0 to stop sound
+		lcall holdNote  ;
+		setb TR0	;restarts TIMER 0 for next note
+	ret			;
+
+;// Judah Subroutine hold_note
+
+holdNote:
+
+ loop0:
+	mov R4, #85		;Hardcoded Tempo
+ 
+  loop1:				
+	 mov R5, #255		;Hardcoded Tempo
+ 
+   loop2:				
+	   nop			;
+
+   djnz R5, loop2		;
+
+  djnz R4, loop1		;
+
+ djnz R3, loop0			;
+
+ret				;
+
+;//end hold_note 
+
+timer_0_isr:			
+
+		cpl BUZZER 		;compliment the BUZZER (P1.7) to drive the speaker
+
+		clr c			;DO I NEED THIS?
+
+		mov A, R6		;upper byte of 16-bit timer re-load value into A
+		mov TH0, A		;A into the upper byte of TIMER 0
+		mov A, R7		;lower byte of 16-bit timer re-load value into A
+		mov TL0, A		;A into the lower byte of TIMER 0
+
+reti					;//return from the interrupt
+
+;//End Judah timer_0_isr
+
+;//End Judah Subroutines
+
+;//End Judah Feature		
 
 ;start of drue_feature		;
 drue_feature:
