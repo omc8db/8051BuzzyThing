@@ -45,32 +45,49 @@ loop:				; label for the sjmp instruction
 	lcall decrement		;
  skip_dec:			;
 
+	; Function call routine
  	jb MALICK_BUTTON,skip_malick	; 
-	lcall transition_left   ;
-	lcall malick_feature	;
+	lcall transition_left   ; Play a transition
+	push 03h		; Store the count
+
+	lcall malick_feature	; Call the function
+
+	pop 03h			; Restore the count
 	lcall transition_right	;
 	lcall led_display_count	;
  skip_malick:			;
 
  
  	jb OWEN_BUTTON,skip_owen	; 
-	lcall transition_left		;
+	lcall transition_left	;
+	push 03h		; Store the count
+
 	lcall owen_feature	;
+
+	pop 03h			; Restore the count
 	lcall transition_right	;
 	lcall led_display_count	;
  skip_owen:			;
 
 	
- 	jb JUDAH_BUTTON,skip_judah	; 
-	lcall transition_left		;
+ 	jb JUDAH_BUTTON,skip_judah; 
+	lcall transition_left	;
+	push 03h		; Store the count
+
 	lcall judah_feature	;
+
+	pop 03h			; Restore the count
 	lcall transition_right	;
 	lcall led_display_count	;
  skip_judah:			;
  
- 	jb DRUE_BUTTON,skip_drue	; 
-	lcall transition_left		;
+ 	jb DRUE_BUTTON,skip_drue; 
+	lcall transition_left	;
+	push 03h		; Store the count
+
 	lcall drue_feature	;
+
+	pop 03h			; Restore the count
 	lcall transition_right	;
 	lcall led_display_count	;
  skip_drue:			;
