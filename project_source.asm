@@ -335,6 +335,7 @@ judah_feature:
 ;//Judah Setup
 
 	mov TMOD, #0x01			; set TIMER_0 to mode 1 
+
 	mov TH0,  #0x00			; load upper 8 bits of TIMER_0 (init TIMER_0) 
 	mov TL0,  #0x00			; load lower 8 bits of TIMER_0 (init TIMER_0)
 	mov R6,   #0x00			; load the same 16-bits from TIMER_0 into R6 (to reload TIMER_0 each isr)
@@ -354,29 +355,37 @@ judah_feature:
 	lcall buzzNoteE6		;buzz the note on E
 	mov R3, #16			;sets the duration for the eighth note
 	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note buzz)
-	;//lcall pauseBetweenNote		;
+	lcall pauseBetweenNote		;
+
+	lcall buzzNoteC6		;buzz the note on E
+	mov R3, #16			;sets the duration for the eighth note
+	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note buzz)
+	lcall pauseBetweenNote		;
 
 	lcall restNote			;rest
 	mov R3, #16			;sets the duration for the eighth note
 	lcall holdNote			;holdNote checks R3 for the duration (16 = eigth note rest)
-	;//lcall pauseBetweenNote		;
+	lcall pauseBetweenNote		;
 
 	lcall buzzNoteE6		;buzz the note on E
 	mov R3, #32			;sets the duration for an eighth note
 	lcall holdNote			;holdNote checks R3 for the duration (32 = quarter note buzz)
-	;//lcall pauseBetweenNote		;
+	lcall pauseBetweenNote		;
 
 	lcall restNote			;rest
 	mov R3, #32			;sets the duration for an eighth note
 	lcall holdNote			;holdNote checks R3 for the duration (32 = eigth note rest)
-	;//lcall pauseBetweenNote		;
+	lcall pauseBetweenNote		;
 
 
-	lcall buzzNoteE6		;buzz the note on E
+	lcall buzzNoteC6		;buzz the note on E
 	mov R3, #64			;sets the duration for an quarter note
 	lcall holdNote			;holdNote checks R3 for the duration (64 = quarter note buzz)
 	lcall pauseBetweenNote		;
 
+	clr TR0				; start TIMER_0 count
+	clr EA				; clr global interrupt enable bit
+	clr ET0				; clr TIMER_0 overflow interrupt
 
 ret
 
@@ -420,16 +429,17 @@ buzzNoteC5:					;buzzer gets music note C (sixth octave) 1046.50 cycles per seco
 				
 pauseBetweenNote:
 
-		mov R3, #0x01	;
-		mov R6, #0x00	; TIMER 0 re-load value is set to minimum
-		mov R7, #0x00	; 
+		mov R3, #1	;
+
+		mov R6, #0	; TIMER 0 re-load value is set to minimum
+		mov R7, #0	; 
 		lcall holdNote  ;
 	ret			;
 
 
 restNote:
-		mov R6, #0x00	;TIMER 0 re-load value is set to minimum
-		mov R7, #0x00	;possible value.
+		mov R6, #0	;TIMER 0 re-load value is set to minimum
+		mov R7, #0	;possible value.
 		clr TR0		;stops TIMER 0 to stop sound
 		lcall holdNote  ;
 		setb TR0	;restarts TIMER 0 for next note
@@ -440,7 +450,7 @@ restNote:
 holdNote:
 
  loop0:
-	mov R4, #85		;Hardcoded Tempo
+	mov R4, #100		;Hardcoded Tempo
  
   loop1:				
 	 mov R5, #255		;Hardcoded Tempo
@@ -469,7 +479,7 @@ timer_0_isr:
 		mov A, R7		;lower byte of 16-bit timer re-load value into A
 		mov TL0, A		;A into the lower byte of TIMER 0
 
-reti					;//return from the interrupt
+ret					;//return from the isr
 
 ;//End Judah timer_0_isr
 
