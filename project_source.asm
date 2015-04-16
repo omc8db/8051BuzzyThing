@@ -347,6 +347,7 @@ judah_feature:
 
 	mov TH0,  #0x00			; load upper 8 bits of TIMER_0 (init TIMER_0) 
 	mov TL0,  #0x00			; load lower 8 bits of TIMER_0 (init TIMER_0)
+
 	mov R6,   #0x00			; load the same 16-bits from TIMER_0 into R6 (to reload TIMER_0 each isr)
 	mov R7,   #0x00			; load the same 16-bits from TIMER_0 into R7 (to reload TIMER_0 each isr)
 
@@ -596,6 +597,8 @@ ret					;
 
 holdNote:
 
+setb TR0			;//restarts TIMER_0 
+
  loop0:
 	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
  
@@ -610,7 +613,7 @@ holdNote:
 
  djnz R3, loop0			;
 
-clr TR0				; stops TIMER_0 to stop sound
+clr TR0				;//stops TIMER_0 to stop sound
 
 ret				;
 
@@ -618,26 +621,37 @@ ret				;
 
 pauseBetweenNote:
 
-		clr TR0			; stops TIMER_0 to stop sound
+	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
+ 
+  loop0:				
+	 mov R5, #244		;//Inner Loop is 488/2 = 244
+ 
+   loop1:				
 
-		mov R3, #0x01		;
-		mov R6, #0x00		; TIMER_0 re-load value is set to minimum
-		mov R7, #0x00		; 
+   djnz R5, loop1		;
 
-		lcall holdNote  	;
-	ret				;
+  djnz R4, loop0		;
+
 
 ;//End pauseBetweenNote
 
 restNote:
 
-		clr TR0			; stops TIMER_0 to stop sound
+ loop0:
+	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
+ 
+  loop1:				
+	 mov R5, #244		;//Inner Loop is 488/2 = 244
+ 
+   loop2:				
 
-		mov R6, #0x00		; set TIMER_0 re-load value to minimum
-		mov R7, #0x00		;
+   djnz R5, loop2		;
 
-		lcall holdNote  	;
-	ret				;
+  djnz R4, loop1		;
+
+ djnz R3, loop0			;
+
+ret		
 
 ;//End restNote
 
@@ -647,8 +661,6 @@ restNote:
 ;// C (fifth octave) 523.25 hz -> 1911 microSec - > /0.27127 = 7045 -> 3522 increments
 
 buzzNoteC5:				
-
-		setb TR0		; restarts TIMER_0 
 
 		mov R6, #0x0D		; high byte
 		mov R7, #0xC2		; low byte
@@ -661,8 +673,6 @@ buzzNoteC5:
 
 buzzNoteCsharp5:			
 
-		setb TR0		;
-
 		mov R6, #0x0C		;
 		mov R7, #0xFC		;
 
@@ -674,8 +684,6 @@ buzzNoteCsharp5:
 
 buzzNoteD5:				
 
-		setb TR0		;
-
 		mov R6, #0x0C		;
 		mov R7, #0x42		;
 
@@ -683,12 +691,9 @@ buzzNoteD5:
 
 	ret				;
 
-
 ;// 622.25 hz -> 2962
 
-buzzNoteDsharp5:
-
-		setb TR0		;			
+buzzNoteDsharp5:			
 
 		mov R6, #0x0B		;
 		mov R7, #0x92		;
@@ -701,8 +706,6 @@ buzzNoteDsharp5:
 
 buzzNoteE5:				
 
-		setb TR0		;
-
 		mov R6, #0x0A		;
 		mov R7, #0xEB		;
 
@@ -713,8 +716,6 @@ buzzNoteE5:
 ;//  698.46 hz -> 2639
 
 buzzNoteF5:				
-
-		setb TR0		;
 
 		mov R6, #0x0A		;
 		mov R7, #0x4F		;
@@ -727,8 +728,6 @@ buzzNoteF5:
 
 buzzNoteFsharp5:			
 
-		setb TR0		;
-
 		mov R6, #0x09		;
 		mov R7, #0xBB		;
 
@@ -738,9 +737,7 @@ buzzNoteFsharp5:
 
 ;// 783.99 hz -> 2351
 
-buzzNoteG5:				
-
-		setb TR0		;  
+buzzNoteG5:				 
 
 		mov R6, #0x09		;
 		mov R7, #0x2F		;
@@ -753,8 +750,6 @@ buzzNoteG5:
 
 buzzNoteGsharp5:			
 
-		setb TR0		;
-
 		mov R6, #0x08		;
 		mov R7, #0xAb		;
 
@@ -765,8 +760,6 @@ buzzNoteGsharp5:
 ;// 880 hz -> 2094
 
 buzzNoteA5:				
-
-		setb TR0		;
 
 		mov R6, #0x08		;
 		mov R7, #0x2E		;
@@ -779,8 +772,6 @@ buzzNoteA5:
 
 buzzNoteAsharp5:			
 
-		setb TR0		;
-
 		mov R6, #0x07		;
 		mov R7, #0xB9		;
 
@@ -791,8 +782,6 @@ buzzNoteAsharp5:
 ;// 987.77 hz -> 1866
 
 buzzNoteB5:				
-
-		setb TR0		;
 
 		mov R6, #0x07		;
 		mov R7, #0x4A		;
@@ -807,8 +796,6 @@ buzzNoteB5:
 ;// 2*(523.25 hz) = 1046.50 hz -> (3522 inc / 2) = 1761 inc
 
 buzzNoteC6:				
-
-		setb TR0		; restarts TIMER_0 
 		
 		mov R6, #0x06		; 
 		mov R7, #0xE0		;
@@ -821,8 +808,6 @@ buzzNoteC6:
 
 buzzNoteCsharp6:			
 
-		setb TR0		;
-
 		mov R6, #0x06		;
 		mov R7, #0x7E		;
 
@@ -833,8 +818,6 @@ buzzNoteCsharp6:
 ;// 1569
 
 buzzNoteD6:				
-
-		setb TR0		;
 
 		mov R6, #0x06		;
 		mov R7, #0x21		;
@@ -847,8 +830,6 @@ buzzNoteD6:
 
 buzzNoteDsharp6:			
 
-		setb TR0		;
-
 		mov R6, #0x05		;
 		mov R7, #0xC9		;
 
@@ -859,8 +840,6 @@ buzzNoteDsharp6:
 ;// 1398
 
 buzzNoteE6:				
-
-		setb TR0		;
 
 		mov R6, #0x05		;
 		mov R7, #0x76		;
@@ -873,8 +852,6 @@ buzzNoteE6:
 
 buzzNoteF6:				
 
-		setb TR0		;
-
 		mov R6, #0x05		;
 		mov R7, #0x27		;
 
@@ -885,8 +862,6 @@ buzzNoteF6:
 ;// 1246
 
 buzzNoteFsharp6:			
-
-		setb TR0		;
 
 		mov R6, #0x04		;
 		mov R7, #0xDD		;
@@ -899,8 +874,6 @@ buzzNoteFsharp6:
 
 buzzNoteG6:				
 
-		setb TR0		; 
-
 		mov R6, #0x04		;
 		mov R7, #0x98		;
 
@@ -911,8 +884,6 @@ buzzNoteG6:
 ;// 1110
 
 buzzNoteGsharp6:			
-
-		setb TR0		;
 
 		mov R6, #0x04		;
 		mov R7, #0x56		;
@@ -925,8 +896,6 @@ buzzNoteGsharp6:
 
 buzzNoteA6:				
 
-		setb TR0		;
-
 		mov R6, #0x04		;
 		mov R7, #0x17		;
 
@@ -938,8 +907,6 @@ buzzNoteA6:
 
 buzzNoteAsharp6:			
 
-		setb TR0		; 
-
 		mov R6, #0x03		;
 		mov R7, #0xDD		;
 
@@ -950,8 +917,6 @@ buzzNoteAsharp6:
 ;// 933
 
 buzzNoteB6:				
-
-		setb TR0		;
 
 		mov R6, #0x03		;
 		mov R7, #0xA5		;
