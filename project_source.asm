@@ -599,19 +599,19 @@ holdNote:
 
 setb TR0			;//restarts TIMER_0 
 
- loop0:
+ looph0:
 	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
  
-  loop1:				
+  looph1:				
 	 mov R5, #244		;//Inner Loop is 488/2 = 244
  
-   loop2:				
+   looph2:				
 
-   djnz R5, loop2		;
+   djnz R5, looph2		;
 
-  djnz R4, loop1		;
+  djnz R4, looph1		;
 
- djnz R3, loop0			;
+ djnz R3, looph0			;
 
 clr TR0				;//stops TIMER_0 to stop sound
 
@@ -623,33 +623,33 @@ pauseBetweenNote:
 
 	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
  
-  loop0:				
+  loopp0:				
 	 mov R5, #244		;//Inner Loop is 488/2 = 244
  
-   loop1:				
+   loopp1:				
 
-   djnz R5, loop1		;
+   djnz R5, loopp1		;
 
-  djnz R4, loop0		;
+  djnz R4, loopp0		;
 
 
 ;//End pauseBetweenNote
 
 restNote:
 
- loop0:
+ loopr0:
 	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
  
-  loop1:				
+  loopr1:				
 	 mov R5, #244		;//Inner Loop is 488/2 = 244
  
-   loop2:				
+   loopr2:				
 
-   djnz R5, loop2		;
+   djnz R5, loopr2		;
 
-  djnz R4, loop1		;
+  djnz R4, loopr1		;
 
- djnz R3, loop0			;
+ djnz R3, loopr0			;
 
 ret		
 
