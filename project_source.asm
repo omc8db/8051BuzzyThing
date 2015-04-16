@@ -323,12 +323,126 @@ all_lights_on:
 	ret			;
 ;end of column functions
 
-
-
 ;start of malick_feature
 malick_feature:			;
-	ret			;
+	mov R7,#8
+circle:
+
+;check for buttons
+
+	lcall check_buttons
+
+	;Light up LEDs in a circle
+	clr LED1_RED
+	lcall malick_delay;
+	setb LED1_RED
+
+	clr LED2_AMB
+	lcall malick_delay;
+	setb LED2_AMB
+
+	clr LED5_RED
+	lcall malick_delay;
+	setb LED5_RED
+	clr LED4_YEL
+	lcall malick_delay;
+	setb LED4_YEL
+	
+	sjmp circle
+
+	ret			
 ;end of malick_feature
+
+;beginning of check for buttons
+check_buttons:
+
+	jb SW7,skip_check_up	;
+	lcall check_up		;
+ skip_check_up:			;
+
+
+	jb SW8,skip_check_down	;
+	lcall check_down	;
+ skip_check_down:		;
+
+ 
+	jb SW9,skip_go_faster	;
+	lcall go_faster		;
+ skip_go_faster:		;
+
+ 
+	jb SW6,skip_go_slower	;
+	lcall go_slower		;
+ skip_go_slower:		;
+
+	jb EXIT_BUTTON,skip_exit
+	ret
+skip_exit:
+
+ret
+
+;end of check for buttons
+
+;Check Upper Lights
+check_up:
+
+	jnb LED1_RED, out1
+	lcall buzz;
+	jnb LED4_YEL, out1
+	lcall buzz;
+out1:
+	ret
+;End of checking upper lights
+
+
+;Check Lower Lights
+check_down:
+
+	jnb LED2_AMB, out2
+	lcall buzz;
+	jnb LED5_RED, out2
+	lcall buzz;
+out2:
+	ret
+;End of checking lower lights
+
+;beginning of malick_delay
+malick_delay:
+	mov A,R7		;
+	mov R4,A		;
+	lcall check_buttons
+ tsd_loop3:			;
+	mov R5,#255		;
+  tsd_loop4:			;
+	mov R6,#255		;
+   tsd_loop5:			;
+	djnz R6,tsd_loop5	;
+	djnz R5,tsd_loop4	;
+	djnz R4,tsd_loop3	;
+	ret;
+;end of malick_delay
+
+
+;beginning of go_slower 
+go_slower:
+	cjne R7,#255,change
+	ret	
+change:
+	mov A,R7
+	mov R3,#01
+	ADD A,R3
+	mov R7,A
+	ret
+;end of go_slower
+
+;beginning of go_faster
+go_faster:
+	djnz R7,good
+	ret
+good:
+	ret
+;end of go_faster
+
 
 ;start of owen_feature
 owen_feature:			;
