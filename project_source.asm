@@ -26,6 +26,16 @@
 #define COUNT_REGISTER R2
 ;R4-R7 available for other usage
 
+;//Judah Tempo Defines (reference 120 BPM)
+
+#define whole_note 1024
+#define half_note 512
+#define quarter_note 256
+#define dotted_eight_note 192
+#define eight_note 128
+#define triplet_note 86
+#define sixteen_note 64
+
 cseg at 0				; tells the assembler to place the first
 					; instruction at address 0
 ;//Judah Timer Interrupt
@@ -325,13 +335,7 @@ judah_feature:
 
 ;//this feature plays the Nintendo classic Mario Bros intro ditty on the buzzer speaker
 
-;//R3 sets the length of note
-
-;//R3 = 1 -> 256th note at 120 BPM
-
-;//R3 = 256 -> quarter note at 120 BPM
-
-;//R3 = 1024 -> whole note at 120 BPM
+;//R3 sets the length of each note for the tempo of 120 BPM
 
 ;//R4 (upper byte) and R5 (lower byte) sets the tempo of the song. We have hardcoded this to 120 BPM for now
 
@@ -358,10 +362,10 @@ judah_feature:
 
 	nop				;
 
-	mov R3, #128			; sets the duration of the note
-	lcall buzzNoteC5		; buzz the note
-	lcall holdNote			; holdNote checks R3 of the duration (16 = eigth note buzz)
-	lcall pauseBetweenNote		;
+	mov R3, #128			; //sets the duration of the note 
+	lcall buzzNoteC5		; //buzz the note
+	lcall holdNote			; //holdNote checks R3 of the duration (16 = eigth note buzz)
+	lcall pauseBetweenNote		; //pauseBetweenNote plays the smallest possible rest
 
 	nop				;
 
@@ -485,7 +489,9 @@ restNote:
 
 ;//These tables assume the timer is PCLK is (7.3728MHz / 2) = 3.6864 Mhz -> 0.27127 microsec per increment
 
-buzzNoteC5:				; C (fifth octave) 523.25 hz -> 1911 microSec - > /0.27127 = 7045 -> 3522 increments
+;// C (fifth octave) 523.25 hz -> 1911 microSec - > /0.27127 = 7045 -> 3522 increments
+
+buzzNoteC5:				
 
 		mov R6, #0x0D		; high byte
 		mov R7, #0xC2		; low byte
@@ -494,7 +500,9 @@ buzzNoteC5:				; C (fifth octave) 523.25 hz -> 1911 microSec - > /0.27127 = 7045
 
 	ret				;
 
-buzzNoteCsharp5:			; 554.37 hz -> 3324 incs
+;// 554.37 hz -> 3324 incs
+
+buzzNoteCsharp5:			
 
 		mov R6, #0x0C		;
 		mov R7, #0xFC		;
@@ -503,7 +511,9 @@ buzzNoteCsharp5:			; 554.37 hz -> 3324 incs
 
 	ret				;
 
-buzzNoteD5:				; 587.33 hz -> 3138 incs
+;// 587.33 hz -> 3138 
+
+buzzNoteD5:				
 
 		mov R6, #0x0C		;
 		mov R7, #0x42		;
@@ -513,116 +523,266 @@ buzzNoteD5:				; 587.33 hz -> 3138 incs
 	ret				;
 
 
-buzzNoteDsharp5:			; 622.25 hz -> 2962
+;// 622.25 hz -> 2962
 
-		mov R6, #?		;
-		mov R7, #?		;
+buzzNoteDsharp5:			
 
-		lcall holdNote		;
-
-	ret				;
-
-buzzNoteE5:				; 659.26 hz -> 2795
-
-		mov R6, #?		;
-		mov R7, #?		;
+		mov R6, #0x0B		;
+		mov R7, #0x92		;
 
 		lcall holdNote		;
 
 	ret				;
 
 
-buzzNoteF5:				;  698.46 hz -> 2795
+;// 659.26 hz -> 2795
 
-		mov R6, #?		;
-		mov R7, #?		;
+buzzNoteE5:				
+
+		mov R6, #0x0A		;
+		mov R7, #0xEB		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+;//  698.46 hz -> 2639
+
+buzzNoteF5:				
+
+		mov R6, #0x0A		;
+		mov R7, #0x4F		;
 
 		lcall holdNote		;
 
 	ret				;		
-				;
 
 
-buzzNoteFsharp5:			; 739.99 hz -> 
+;// 739.99 hz -> 2491
 
-		mov R6, #?		;
-		mov R7, #?		;
+buzzNoteFsharp5:			
+
+		mov R6, #0x09		;
+		mov R7, #0xBB		;
 
 		lcall holdNote		;
 
 	ret				;
 
-buzzNoteG5:				; buzzer gets music note E (sixth octave) 783.99 cycles per second
 
-		mov R6, #?		;
-		mov R7, #?		;
+;// 783.99 hz -> 2351
+
+buzzNoteG5:				
+
+		mov R6, #0x09		;
+		mov R7, #0x2F		;
 
 		lcall holdNote		;
 
-	ret				; //523.25 hz -> 1911 microSec - > /0.27127 = 7045 -> 3522 increments		
+	ret				;		
+
 				
+;// 830.61 hz -> 2219
 
-buzzNoteGsharp5:			;buzzer gets music note E (sixth octave) 830.61 cycles per second
+buzzNoteGsharp5:			
 
-		mov R6, #?		;
-		mov R7, #?		;
-
-		lcall holdNote		;
-
-	ret				;
-
-buzzNoteA5:				;buzzer gets music note E (sixth octave) 880 cycles per second
-
-		mov R6, #?		;
-		mov R7, #?		;
-
-		lcall holdNote		;
-
-	ret				;		
-				;
-
-
-buzzNoteAsharp5:			;buzzer gets music note E (sixth octave) 932.33 cycles per second
-
-		mov R6, #?		;
-		mov R7, #?		;
+		mov R6, #0x08		;
+		mov R7, #0xAb		;
 
 		lcall holdNote		;
 
 	ret				;
 
-buzzNoteB5:				;buzzer gets music note E (sixth octave) 987.77 cycles per second
 
-		mov R6, #?		;
-		mov R7, #?		;
+;// 880 hz -> 2094
+
+buzzNoteA5:				
+
+		mov R6, #0x08		;
+		mov R7, #0x2E		;
 
 		lcall holdNote		;
 
 	ret				;		
-				;
+				
+;// 932.33 hz -> 1977
+
+buzzNoteAsharp5:			
+
+		mov R6, #0x07		;
+		mov R7, #0xB9		;
+
+		lcall holdNote		;
+
+	ret				;
 
 
-buzzNoteC6:				; 1046.50 hz -> -> 1760 increments
+;// 987.77 hz -> 1866
+
+buzzNoteB5:				
+
+		mov R6, #0x07		;
+		mov R7, #0x4A		;
+
+		lcall holdNote		;
+
+	ret				;
+
+;//Used log symmetry from fifth octave sixth octave to double the inc value when populating tables		
+
+
+;// 2*(523.25 hz) = 1046.50 hz -> (3522 inc / 2) = 1761 inc
+
+buzzNoteC6:				
 		
 		mov R6, #0x06		; 
-		mov R7, #0xB8		; 
+		mov R7, #0xE0		;
+ 
 		lcall holdNote		;
                 
 	ret				;
 
-buzzNoteE6:				;buzzer gets music note E (sixth octave) 1318.51 cycles per second
 
-		mov R6, #0xF5		;
-		mov R7, #0x14		;
+;// 1662
+
+buzzNoteCsharp6:			
+
+		mov R6, #0x06		;
+		mov R7, #0x7E		;
 
 		lcall holdNote		;
 
 	ret				;
 
 
-buzzNoteG6:
-    		mov R6, #0xF6		;
-		mov R7, #0xD1		;
+;// 1569
+
+buzzNoteD6:				
+
+		mov R6, #0x06		;
+		mov R7, #0x21		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+;// 1481
+
+buzzNoteDsharp6:			
+
+		mov R6, #0x05		;
+		mov R7, #0xC9		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+;// 1398
+
+buzzNoteE6:				
+
+		mov R6, #0x05		;
+		mov R7, #0x76		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+;// 1320
+
+buzzNoteF6:				
+
+		mov R6, #0x05		;
+		mov R7, #0x27		;
+
+		lcall holdNote		;
+
+	ret				;		
+
+
+;// 1246
+
+buzzNoteFsharp6:			
+
+		mov R6, #0x04		;
+		mov R7, #0xDD		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+;// 1176
+
+buzzNoteG6:				
+
+		mov R6, #0x04		;
+		mov R7, #0x98		;
+
+		lcall holdNote		;
+
+	ret				;		
+	
+			
+;// 1110
+
+buzzNoteGsharp6:			
+
+		mov R6, #0x04		;
+		mov R7, #0x56		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+;// 1047
+
+buzzNoteA6:				
+
+		mov R6, #0x04		;
+		mov R7, #0x17		;
+
+		lcall holdNote		;
+
+	ret				;		
+	
+			
+;// 989
+
+buzzNoteAsharp6:			
+
+		mov R6, #0x03		;
+		mov R7, #0xDD		;
+
+		lcall holdNote		;
+
+	ret				;
+
+
+;// 933
+
+buzzNoteB6:				
+
+		mov R6, #0x03		;
+		mov R7, #0xA5		;
+
+		lcall holdNote		;
+
+	ret				;		
+
+
+;// 880
+
+buzzNoteC6:				
+		
+		mov R6, #0x03		; 
+		mov R7, #0x70		;
+ 
 		lcall holdNote		;
                 
 	ret				;
