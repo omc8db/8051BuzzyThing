@@ -28,6 +28,9 @@
 
 ;//Judah Tempo Defines (reference 120 BPM)
 
+#define ref_tempo_low_byte
+#define ref_tempo_high_byte
+
 #define quarter_note 254
 #define dotted_eight_note 192
 #define eight_note 128
@@ -36,16 +39,6 @@
 
 cseg at 0				; tells the assembler to place the first
 					; instruction at address 0
-;//Judah Timer Interrupt
-
-ljmp setup				; jumps over the interrupt vector table (0x0003 to 0x0073)
-
-cseg at 0x000B				; interrupt vector address of TIMER_0
-
- 	lcall buzz_timer_at_freq_isr	; jumps to the timer 0 interrupt subroutine
-	reti				; returns from the interrupt		
-
-;//end Judah Timer Interrupt
 
 setup:					;
 	mov P2M1,#0			; set Port 2 to bi-directional
@@ -337,24 +330,7 @@ judah_feature:
 
 ;//R4 (upper byte) and R5 (lower byte) sets the tempo of the song. We have hardcoded this to 120 BPM for now
 
-;//R6 (upper byte) and R7 (lower byte) set the pitch of the note (as the re-load value for TIMER_0 pitch generator isr)
-
-;//A is reserved for use inside the (TIMER_O) pitch generator isr
-
-;//Judah Setup
-
-	mov TMOD, #0x01			; set TIMER_0 to mode 1 
-
-	mov TH0,  #0x00			; load upper 8 bits of TIMER_0 (init TIMER_0) 
-	mov TL0,  #0x00			; load lower 8 bits of TIMER_0 (init TIMER_0)
-
-	mov R6,   #0x00			; load the same 16-bits from TIMER_0 into R6 (to reload TIMER_0 each isr)
-	mov R7,   #0x00			; load the same 16-bits from TIMER_0 into R7 (to reload TIMER_0 each isr)
-
-	SETB EA				; set global interrupt enable bit
-	SETB ET0			; enable TIMER_0 overflow interrupt
-	
-;//End Judah Setup
+;//R6 (upper byte) and R7 (lower byte) set the pitch of the note (as the re-load value for the pitch generator isr)
 
 ;//Judah Main
 
@@ -558,14 +534,9 @@ judah_feature:
 	lcall buzzNoteC6		;
 	lcall pauseBetweenNote		;
 
-
 	nop				; //end tag
 
 	nop				; //whew
-
-	clr TR0				; stop TIMER_0 count
-	clr EA				; release global interrupt enable bit
-	clr ET0				; release TIMER_0 overflow interrupt
 
 ret
 
@@ -573,23 +544,26 @@ ret
 
 ;//Judah Subroutines
 
-buzz_timer_at_freq_isr:			
+generate_pitch:			
 
-		cpl BUZZER 		;compliment the BUZZER (P1.7) to drive the speaker
+	cpl BUZZER 			;//compliment the BUZZER (P1.7) to drive the speaker
 
-		clr c			;DO I NEED THIS?
+	clr c				;//DO I NEED THIS?
+ 
+  	loop_genpitch_0:				
+ 
+   	 loopg1:				
 
-		mov A, R6		;upper byte of 16-bit timer re-load value into A
-		mov TH0, A		;A into the upper byte of TIMER 0
+   	 djnz R7, loop_genpitch_1	;//lowbyte of period pitch
 
-		mov A, R7		;lower byte of 16-bit timer re-load value into A
-		mov TL0, A		;A into the lower byte of TIMER 0
+  	djnz R6, loop_genpitch_0	;//highbyte of period pitch
+
 
 ret					;
 
 ;//End buzz_timer_at_freq_isr
 
-;//This function assumes each Intruction is is (7.3728MHz / 2) = 3.6864 Mhz -> 0.27127 microsec per inst
+;//This function assumes each Isntruction is is (7.3728MHz / 2) = 3.6864 Mhz -> 0.27127 microsec per inst
 
 ;//We are hardcoding 120 BPM -> 500,000 microsec per quarter note pulse
 
@@ -597,23 +571,24 @@ ret					;
 
 holdNote:
 
-setb TR0			;//restarts TIMER_0 
+ loop_holdnote_0:
 
- looph0:
 	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
  
-  looph1:				
+  loop_holdnote_1:
+				
 	 mov R5, #244		;//Inner Loop is 488/2 = 244
  
-   looph2:				
+   looph2:
 
-   djnz R5, looph2		;
+   lcall generate_pitch		;							
 
-  djnz R4, looph1		;
+   djnz R5, loop_holdnote_2		;
 
- djnz R3, looph0			;
+  djnz R4, loop_hold_note_1		;
 
-clr TR0				;//stops TIMER_0 to stop sound
+ djnz R3, loop_holdnote_0		;
+
 
 ret				;
 
@@ -623,33 +598,36 @@ pauseBetweenNote:
 
 	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
  
-  loopp0:				
+  loop_pausebetween_0:	
+			
 	 mov R5, #244		;//Inner Loop is 488/2 = 244
  
-   loopp1:				
+   loop_pausebetween_1:				
 
-   djnz R5, loopp1		;
+   djnz R5, loop_pausebetween_1		;
 
-  djnz R4, loopp0		;
+  djnz R4, loop_pausebetween_0		;
 
 
 ;//End pauseBetweenNote
 
 restNote:
 
- loopr0:
-	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
+ loop_restnote_0:
+
+	mov R4, #2			;//Outer Loop is 1953/2/2 = 488 
  
-  loopr1:				
-	 mov R5, #244		;//Inner Loop is 488/2 = 244
+  loop_restnote_1:
+				
+	 mov R5, #244			;//Inner Loop is 488/2 = 244
  
    loopr2:				
 
-   djnz R5, loopr2		;
+   djnz R5, loop_restnote_2		;
 
-  djnz R4, loopr1		;
+  djnz R4, loop_restnote_1		;
 
- djnz R3, loopr0			;
+ djnz R3, loop_restnote_0		;
 
 ret		
 
@@ -662,8 +640,8 @@ ret
 
 buzzNoteC5:				
 
-		mov R6, #0x0D		; high byte
-		mov R7, #0xC2		; low byte
+		mov R6, #0x0D		;//high byte of period pitch
+		mov R7, #0xC2		;//low byte of period pitch
 
 		lcall holdNote		;
 
