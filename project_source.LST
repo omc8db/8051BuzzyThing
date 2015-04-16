@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     1
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     1
 
 
 MACRO ASSEMBLER A51 V6.02
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
   00DB          +1    56     sfr I2ADR  = 0xDB;
   00D8          +1    57     sfr I2CON  = 0xD8;
   00DA          +1    58     sfr I2DAT  = 0xDA;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     2
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     2
 
   00DD          +1    59     sfr I2SCLH = 0xDD;
   00DC          +1    60     sfr I2SCLL = 0xDC;
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
   00D2          +1   122     sbit OV   = PSW^2;
   00D1          +1   123     sbit F1   = PSW^1;
   00D0          +1   124     sbit P    = PSW^0;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     3
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     3
 
                 +1   125     
                 +1   126     
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
   0087          +1   188     sbit T1 = P0^7;
   0086          +1   189     sbit KB6 = P0^6; // alternatively "CMP1"
                 +1   190     
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     4
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     4
 
   0085          +1   191     sbit KB5 = P0^5;
   0084          +1   192     sbit KB4 = P0^4;
@@ -269,7 +269,7 @@ LOC  OBJ            LINE     SOURCE
                 +1   254     
                 +1   255     
                 +1   256     
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     5
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     5
 
                 +1   257     
                 +1   258     
@@ -337,7 +337,7 @@ LOC  OBJ            LINE     SOURCE
 001D 120114          320             lcall transition_left   ; Play a transition
 0020 C003            321             push 03h                ; Store the count
                      322     
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     6
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     6
 
 0022 120171          323             lcall malick_feature    ; Call the function
                      324     
@@ -405,7 +405,7 @@ LOC  OBJ            LINE     SOURCE
 0079 1200BB          386             lcall led_display_count ;
                      387             
                      388             ;more debouncing
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     7
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     7
 
 007C 1200B2          389             lcall debounce_delay    ;
 007F 22              390             ret                     ;
@@ -473,7 +473,7 @@ LOC  OBJ            LINE     SOURCE
 00B4                 452      debounce_delay_loop0:
 00B4 7BFF            453             mov R3,#255     ; Change this   ;
 00B6                 454      debounce_delay_loop1:          ;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     8
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     8
 
 00B6 DBFE            455             djnz R3,debounce_delay_loop1;
 00B8 DCFA            456             djnz R4,debounce_delay_loop0;
@@ -541,7 +541,7 @@ LOC  OBJ            LINE     SOURCE
                      518     ;end of third_sec_delay
                      519     
                      520     ;start of transition_right
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE     9
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     9
 
 00F5                 521     transition_right:               ;
                      522     
@@ -609,7 +609,7 @@ LOC  OBJ            LINE     SOURCE
 015D                 584     clr_screen:
 015D 12013A          585             lcall col1_off          ;
 0160 120148          586             lcall col2_off          ;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    10
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    10
 
 0163 120156          587             lcall col3_off          ;
 0166 22              588             ret                     ;
@@ -677,7 +677,7 @@ LOC  OBJ            LINE     SOURCE
                      650     
 01AE 20A409          651             jb p2.4, out1
 01B1 12009A          652             lcall buzz;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    11
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    11
 
 01B4 208503          653             jb p0.5, out1
 01B7 12009A          654             lcall buzz;
@@ -745,7 +745,7 @@ LOC  OBJ            LINE     SOURCE
 01EE 1200E8          716             lcall third_sec_delay   ;
 01F1 1200E8          717             lcall third_sec_delay   ;
 01F4 1200E8          718             lcall third_sec_delay   ;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    12
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    12
 
 01F7 12015D          719             lcall clr_screen        ;
 01FA 1200E8          720             lcall third_sec_delay   ;
@@ -813,13 +813,13 @@ LOC  OBJ            LINE     SOURCE
                      782     
                      783     ;start of drue_feature          ;
 0262                 784     drue_feature:
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    13
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    13
 
 0262 22              785             ret                     ;
                      786     ;end of drue_feature            ;
                      787     
                      788     end
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    14
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    14
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -887,7 +887,7 @@ EA . . . . . . . . .  B ADDR   00A8H.7 A
 EBO. . . . . . . . .  B ADDR   00A8H.5 A   
 EC . . . . . . . . .  B ADDR   00E8H.2 A   
 ECCU . . . . . . . .  B ADDR   00E8H.4 A   
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    15
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    15
 
 EI2C . . . . . . . .  B ADDR   00E8H.0 A   
 EIEE . . . . . . . .  B ADDR   00E8H.7 A   
@@ -955,7 +955,7 @@ MALICK_FEATURE . . .  C ADDR   0171H   A
 MISO . . . . . . . .  B ADDR   00A0H.3 A   
 MOSI . . . . . . . .  B ADDR   00A0H.2 A   
 NEVER_MIND . . . . .  C ADDR   01DBH   A   
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    16
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    16
 
 OCA. . . . . . . . .  B ADDR   00A0H.6 A   
 OCB. . . . . . . . .  B ADDR   0090H.6 A   
@@ -1023,7 +1023,7 @@ SKIP_CHECK_UP. . . .  C ADDR   0179H   A
 SKIP_DEC . . . . . .  C ADDR   001AH   A   
 SKIP_DRUE. . . . . .  C ADDR   0066H   A   
 SKIP_EXIT. . . . . .  C ADDR   018FH   A   
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 18:11:59 PAGE    17
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    17
 
 SKIP_GO_FASTER . . .  C ADDR   0185H   A   
 SKIP_GO_SLOWER . . .  C ADDR   018BH   A   

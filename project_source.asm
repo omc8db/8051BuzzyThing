@@ -369,18 +369,18 @@ skip_exit:
 	lcall malick_delay;
 	setb LED4_YEL
 	
-	sjmp circle;
+	sjmp circle
 
-	ret			;
+	ret			
 ;end of malick_feature
 
 
 ;Check Upper Lights
 check_up:
 
-	jb LED1_RED, out1
+	jnb LED1_RED, out1
 	lcall buzz;
-	jb LED4_YEL, out1
+	jnb LED4_YEL, out1
 	lcall buzz;
 out1:
 	ret
@@ -390,9 +390,9 @@ out1:
 ;Check Lower Lights
 check_down:
 
-	jb LED2_AMB, out2
+	jnb LED2_AMB, out2
 	lcall buzz;
-	jb LED5_RED, out2
+	jnb LED5_RED, out2
 	lcall buzz;
 out2:
 	ret
@@ -416,15 +416,21 @@ malick_delay:
 
 ;beginning of go_faster 
 go_faster:
-	cjne R7,#255,dont_change
-dont_change:
+	cjne R7,#255,change
+	ret	
+change:
+	mov A,R7
+	mov R3,#01
+	ADD A,R3
+	mov R7,A
 	ret
 ;end of go_faster
 
 ;beginning of go_slower
 go_slower:
-	djnz R7,never_mind
-never_mind:
+	djnz R7,good
+	ret
+good:
 	ret
 ;end of go_slower
 
