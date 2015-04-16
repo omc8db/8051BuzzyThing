@@ -28,8 +28,8 @@
 
 ;//Judah Tempo Defines (reference 120 BPM)
 
-#define ref_tempo_low_byte
-#define ref_tempo_high_byte
+#define ref_tempo_low_byte 244
+#define ref_tempo_high_byte 2
 
 #define quarter_note 254
 #define dotted_eight_note 192
@@ -573,34 +573,36 @@ holdNote:
 
  loop_holdnote_0:
 
-	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
+	mov R4, #ref_tempo_high_byte		;//Outer Loop is 1953/2/2 = 488 
  
   loop_holdnote_1:
 				
-	 mov R5, #244		;//Inner Loop is 488/2 = 244
+	 mov R5, #ref_tempo_low_byt		;//Inner Loop is 488/2 = 244
  
    loop_holdnote_2:
 
-   lcall generate_pitch		;							
+   lcall generate_pitch			;							
 
    djnz R5, loop_holdnote_2		;
 
-  djnz R4, loop_hold_note_1		;
+  djnz R4, loop_holdnote_1		;
 
  djnz R3, loop_holdnote_0		;
 
 
-ret				;
+ret					;
 
 ;//end holdNote 
 
 pauseBetweenNote:
 
-	mov R4, #2		;//Outer Loop is 1953/2/2 = 488 
+
+
+	mov R4, #ref_tempo_high_byte	;//Outer Loop is 1953/2/2 = 488 
  
   loop_pausebetween_0:	
 			
-	 mov R5, #244		;//Inner Loop is 488/2 = 244
+	 mov R5, #ref_tempo_low_byte	;//Inner Loop is 488/2 = 244
  
    loop_pausebetween_1:				
 
@@ -615,11 +617,11 @@ restNote:
 
  loop_restnote_0:
 
-	mov R4, #2			;//Outer Loop is 1953/2/2 = 488 
+	mov R4, #ref_tempo_high_byte	;//Outer Loop is 1953/2/2 = 488 
  
   loop_restnote_1:
 				
-	 mov R5, #244			;//Inner Loop is 488/2 = 244
+	 mov R5, #ref_tempo_low_byte	;//Inner Loop is 488/2 = 244
  
    loop_restnote_2:				
 
