@@ -360,52 +360,202 @@ judah_feature:
 
 ;//Judah Main
 
-	nop				;
+	nop				; //ahem
 
-	mov R3, #128			; //sets the duration of the note 
-	lcall buzzNoteC5		; //buzz the note
-	lcall holdNote			; //holdNote checks R3 of the duration (16 = eigth note buzz)
+	mov R3, #eight_note		; //sets the duration of the note 
+	lcall buzzNoteE6		; //buzz the note
 	lcall pauseBetweenNote		; //pauseBetweenNote plays the smallest possible rest
 
-	nop				;
-
-	mov R3, #128			;
-	lcall buzzNoteCsharp5		;
-	lcall holdNote			;
+	mov R3, #eight_note		;
+	lcall buzzNoteE6		;
 	lcall pauseBetweenNote		;
-
-	nop				;
 	
-	mov R3, #128			;
+	mov R3, #sixteen_note		;
 	lcall restNote			;
-	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	mov R3, #128			;
-	lcall buzzNoteD5		;
-	lcall holdNote			;
+	mov R3, #sixteen_note		;
+	lcall buzzNoteE6		;
 	lcall pauseBetweenNote		;
 
-	mov R3, #128			;
+	mov R3, #sixteen_note		;
 	lcall restNote			;
-	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	mov R3, #256			;
-	lcall buzzNoteCsharp5		;
-	lcall holdNote			;
+	mov R3, #sixteen_note		;
+	lcall buzzNoteC6		;
 	lcall pauseBetweenNote		;
 
+	mov R3, #sixteen_note		;
+	lcall buzzNoteE6		;
+	lcall pauseBetweenNote		;
 
-	mov R3, #256			;
+	mov R3, #sixteen_note		;
 	lcall restNote			;
-	lcall holdNote			;
 	lcall pauseBetweenNote		;
 
-	mov R3, #256			;
-	lcall buzzNoteC5		;
-	lcall holdNote			;
+	nop				; //end bar 1
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteG6		;
 	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #eight_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #quarter_note		;
+	lcall buzzNoteG5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #half_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	nop				; //end bar 2
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteC6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #eight_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteG5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #eight_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #eight_note		;
+	lcall buzzNoteE5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #half_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	nop				; //end bar 3
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteA5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteB5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteAsharp5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteA5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	nop				; //end bar 4
+
+	mov R3, #eight_note		;
+	lcall buzzNoteG5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteE6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteG6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteA6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteF6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteG6		;
+	lcall pauseBetweenNote		;
+
+	nop				; //end bar 5
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteE6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #eight_note		;
+	lcall buzzNoteC6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteD6		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #eight_note		;
+	lcall buzzNoteB5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteB5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall buzzNoteB5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #sixteen_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #eight_note		;
+	lcall buzzNoteB5		;
+	lcall pauseBetweenNote		;
+
+	mov R3, #whole_note		;
+	lcall buzzNoteC6		;
+	lcall pauseBetweenNote		;
+
+
+	nop				; //end tag
+
+	nop				; //whew
 
 	clr TR0				; release TIMER_0 count
 	clr EA				; release global interrupt enable bit
@@ -484,8 +634,6 @@ restNote:
 
 ;//End restNote
 
-
-;//TODO Note Tables:
 
 ;//These tables assume the timer is PCLK is (7.3728MHz / 2) = 3.6864 Mhz -> 0.27127 microsec per increment
 
