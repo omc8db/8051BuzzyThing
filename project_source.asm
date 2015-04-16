@@ -410,14 +410,12 @@ out2:
 malick_delay:
 	mov A,R7		;
 	mov R4,A		;
+	lcall check_buttons
  tsd_loop3:			;
 	mov R5,#255		;
   tsd_loop4:			;
 	mov R6,#255		;
    tsd_loop5:			;
-	;check buttons while in delay
-		lcall check_buttons
-
 	djnz R6,tsd_loop5	;
 	djnz R5,tsd_loop4	;
 	djnz R4,tsd_loop3	;
