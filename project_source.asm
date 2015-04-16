@@ -28,9 +28,7 @@
 
 ;//Judah Tempo Defines (reference 120 BPM)
 
-#define whole_note 1024
-#define half_note 512
-#define quarter_note 256
+#define quarter_note 254
 #define dotted_eight_note 192
 #define eight_note 128
 #define triplet_note 86
@@ -411,7 +409,11 @@ judah_feature:
 	lcall buzzNoteG5		;
 	lcall pauseBetweenNote		;
 
-	mov R3, #half_note		;
+	mov R3, #quarter_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #quarter_note		;
 	lcall restNote			;
 	lcall pauseBetweenNote		;
 
@@ -437,7 +439,11 @@ judah_feature:
 	lcall buzzNoteE5		;
 	lcall pauseBetweenNote		;
 
-	mov R3, #half_note		;
+	mov R3, #quarter_note		;
+	lcall restNote			;
+	lcall pauseBetweenNote		;
+
+	mov R3, #quarter_note		;
 	lcall restNote			;
 	lcall pauseBetweenNote		;
 
@@ -547,7 +553,7 @@ judah_feature:
 	lcall buzzNoteB5		;
 	lcall pauseBetweenNote		;
 
-	mov R3, #whole_note		;
+	mov R3, #quarter_note		;
 	lcall buzzNoteC6		;
 	lcall pauseBetweenNote		;
 
@@ -953,19 +959,6 @@ buzzNoteB6:
 		lcall holdNote		;
 
 	ret				;		
-
-;// 880
-
-buzzNoteC6:				
-
-		setb TR0		;
-		
-		mov R6, #0x03		; 
-		mov R7, #0x70		;
- 
-		lcall holdNote		;
-                
-	ret				;
 
 ;//End Judah Subroutines
 
