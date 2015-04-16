@@ -336,6 +336,12 @@ judah_feature:
 
 	nop				; //ahem
 
+	mov R3, #quarter_note		; //sets the duration of the note 
+	lcall debugNote			; //buzz the note
+	lcall pauseBetweenNote		; //pauseBetweenNote plays the smallest possible restdebugNote:
+
+	nop				; //ahem
+
 	mov R3, #eight_note		; //sets the duration of the note 
 	lcall buzzNoteE6		; //buzz the note
 	lcall pauseBetweenNote		; //pauseBetweenNote plays the smallest possible rest
@@ -639,6 +645,17 @@ ret
 ;//These tables assume the timer is PCLK is (7.3728MHz / 2) = 3.6864 Mhz -> 0.27127 microsec per increment
 
 ;// C (fifth octave) 523.25 hz -> 1911 microSec - > /0.27127 = 7045 -> 3522 increments
+
+debugNote:				
+
+		mov R6, #0xFF		;//high byte of period pitch
+		mov R7, #0xFF		;//low byte of period pitch
+
+		lcall holdNote		;
+
+	ret				;
+
+;// 554.37 hz -> 3324 incs
 
 buzzNoteC5:				
 
