@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V4.02                                                        04/15/2015  21:10:43  PAGE 1
+BL51 BANKED LINKER/LOCATER V4.02                                                        04/15/2015  21:28:30  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V4.02, INVOKED BY:
@@ -19,7 +19,7 @@ LINK MAP OF MODULE:  project1 (PROJECT_SOURCE)
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
-            CODE    0000H     0263H     ABSOLUTE     
+            CODE    0000H     026AH     ABSOLUTE     
 
 
 
@@ -57,11 +57,12 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   N:00EBH         SYMBOL        CCCRB
   N:00ECH         SYMBOL        CCCRC
   N:00EDH         SYMBOL        CCCRD
+  C:01D9H         SYMBOL        CHANGE
   C:01BBH         SYMBOL        CHECK_DOWN
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 2
+
+
   C:01AEH         SYMBOL        CHECK_UP
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 2
-
-
   C:0173H         SYMBOL        CIRCLE
   C:015DH         SYMBOL        CLR_SCREEN
   N:00ACH         SYMBOL        CMP1
@@ -84,10 +85,9 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   N:00F1H         SYMBOL        DEECON
   N:00F2H         SYMBOL        DEEDAT
   N:0095H         SYMBOL        DIVM
-  C:01D8H         SYMBOL        DONT_CHANGE
   N:0083H         SYMBOL        DPH
   N:0082H         SYMBOL        DPL
-  C:0262H         SYMBOL        DRUE_FEATURE
+  C:0269H         SYMBOL        DRUE_FEATURE
   B:00A8H.7       SYMBOL        EA
   B:00A8H.5       SYMBOL        EBO
   B:00E8H.2       SYMBOL        EC
@@ -107,8 +107,9 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   B:00D0H.5       SYMBOL        F0
   B:00D0H.1       SYMBOL        F1
   B:0098H.7       SYMBOL        FE
+  C:01E2H         SYMBOL        GOOD
   C:01D5H         SYMBOL        GO_FASTER
-  C:01D9H         SYMBOL        GO_SLOWER
+  C:01DFH         SYMBOL        GO_SLOWER
   B:00C8H.5       SYMBOL        HLTEN
   B:00C8H.6       SYMBOL        HLTRN
   N:00DBH         SYMBOL        I2ADR
@@ -118,10 +119,10 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   N:00DDH         SYMBOL        I2SCLH
   N:00DCH         SYMBOL        I2SCLL
   N:00D9H         SYMBOL        I2STAT
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 3
+
+
   B:00A0H.7       SYMBOL        ICA
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 3
-
-
   B:00A0H.0       SYMBOL        ICB
   N:00ABH         SYMBOL        ICRAH
   N:00AAH         SYMBOL        ICRAL
@@ -142,7 +143,7 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   N:00F7H         SYMBOL        IP1H
   B:0088H.0       SYMBOL        IT0
   B:0088H.2       SYMBOL        IT1
-  C:0261H         SYMBOL        JUDAH_FEATURE
+  C:0268H         SYMBOL        JUDAH_FEATURE
   B:0080H.0       SYMBOL        KB0
   B:0080H.1       SYMBOL        KB1
   B:0080H.2       SYMBOL        KB2
@@ -160,7 +161,6 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   C:0171H         SYMBOL        MALICK_FEATURE
   B:00A0H.3       SYMBOL        MISO
   B:00A0H.2       SYMBOL        MOSI
-  C:01DBH         SYMBOL        NEVER_MIND
   B:00A0H.6       SYMBOL        OCA
   B:0090H.6       SYMBOL        OCB
   B:0090H.7       SYMBOL        OCC
@@ -176,10 +176,10 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   C:01BAH         SYMBOL        OUT1
   C:01C7H         SYMBOL        OUT2
   B:00D0H.2       SYMBOL        OV
-  C:01DCH         SYMBOL        OWEN_FEATURE
+  C:01E3H         SYMBOL        OWEN_FEATURE
   B:00D0H.0       SYMBOL        P
   N:0080H         SYMBOL        P0
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 4
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 4
 
 
   N:0084H         SYMBOL        P0M1
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   B:0098H.7       SYMBOL        SM0
   B:0098H.6       SYMBOL        SM1
   B:0098H.5       SYMBOL        SM2
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 5
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 5
 
 
   N:0081H         SYMBOL        SP
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   B:00B0H.0       SYMBOL        XTAL2
   C:0000H         LINE#         32
   C:0003H         LINE#         33
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 6
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 6
 
 
   C:0006H         LINE#         34
@@ -359,7 +359,7 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   C:008EH         LINE#         139
   C:0091H         LINE#         140
   C:0093H         LINE#         146
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 7
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 7
 
 
   C:0096H         LINE#         149
@@ -419,7 +419,7 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   C:00FEH         LINE#         256
   C:0101H         LINE#         257
   C:0104H         LINE#         258
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 8
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 8
 
 
   C:0107H         LINE#         259
@@ -479,7 +479,7 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   C:0182H         LINE#         344
   C:0185H         LINE#         348
   C:0188H         LINE#         349
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 9
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 9
 
 
   C:018BH         LINE#         352
@@ -517,71 +517,77 @@ SYMBOL TABLE OF MODULE:  project1 (PROJECT_SOURCE)
   C:01D2H         LINE#         412
   C:01D4H         LINE#         413
   C:01D5H         LINE#         419
-  C:01D8H         LINE#         421
-  C:01D9H         LINE#         426
-  C:01DBH         LINE#         428
-  C:01DCH         LINE#         436
-  C:01DEH         LINE#         437
-  C:01E0H         LINE#         438
-  C:01E2H         LINE#         439
-  C:01E4H         LINE#         440
-  C:01E6H         LINE#         441
-  C:01E8H         LINE#         442
-  C:01EAH         LINE#         443
-  C:01ECH         LINE#         444
-  C:01EEH         LINE#         446
-  C:01F1H         LINE#         447
-  C:01F4H         LINE#         448
-  C:01F7H         LINE#         449
-  C:01FAH         LINE#         450
-  C:01FDH         LINE#         453
-  C:01FFH         LINE#         454
-  C:0201H         LINE#         455
-  C:0203H         LINE#         456
-  C:0205H         LINE#         457
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:10:43  PAGE 10
+  C:01D8H         LINE#         420
+  C:01D9H         LINE#         422
+  C:01DAH         LINE#         423
+  C:01DCH         LINE#         424
+  C:01DDH         LINE#         425
+  C:01DEH         LINE#         426
+  C:01DFH         LINE#         431
+  C:01E1H         LINE#         432
+  C:01E2H         LINE#         434
+  C:01E3H         LINE#         442
+  C:01E5H         LINE#         443
+  C:01E7H         LINE#         444
+  C:01E9H         LINE#         445
+  C:01EBH         LINE#         446
+  C:01EDH         LINE#         447
+  C:01EFH         LINE#         448
+  C:01F1H         LINE#         449
+  C:01F3H         LINE#         450
+  C:01F5H         LINE#         452
+  C:01F8H         LINE#         453
+  C:01FBH         LINE#         454
+  C:01FEH         LINE#         455
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/15/2015  21:28:30  PAGE 10
 
 
-  C:0207H         LINE#         458
-  C:0209H         LINE#         459
-  C:020BH         LINE#         460
-  C:020DH         LINE#         461
-  C:020FH         LINE#         463
-  C:0212H         LINE#         464
-  C:0215H         LINE#         465
-  C:0218H         LINE#         466
-  C:021BH         LINE#         467
-  C:021EH         LINE#         470
-  C:0220H         LINE#         471
-  C:0222H         LINE#         472
-  C:0224H         LINE#         473
-  C:0226H         LINE#         474
-  C:0228H         LINE#         475
-  C:022AH         LINE#         476
-  C:022CH         LINE#         477
-  C:022EH         LINE#         478
-  C:0230H         LINE#         481
-  C:0233H         LINE#         482
-  C:0236H         LINE#         483
-  C:0239H         LINE#         484
-  C:023CH         LINE#         485
-  C:023FH         LINE#         488
-  C:0241H         LINE#         489
-  C:0243H         LINE#         490
-  C:0245H         LINE#         491
-  C:0247H         LINE#         492
-  C:0249H         LINE#         493
-  C:024BH         LINE#         494
-  C:024DH         LINE#         495
-  C:024FH         LINE#         496
-  C:0251H         LINE#         499
-  C:0254H         LINE#         500
-  C:0257H         LINE#         501
-  C:025AH         LINE#         502
-  C:025DH         LINE#         503
-  C:0260H         LINE#         505
-  C:0261H         LINE#         510
-  C:0262H         LINE#         515
+  C:0201H         LINE#         456
+  C:0204H         LINE#         459
+  C:0206H         LINE#         460
+  C:0208H         LINE#         461
+  C:020AH         LINE#         462
+  C:020CH         LINE#         463
+  C:020EH         LINE#         464
+  C:0210H         LINE#         465
+  C:0212H         LINE#         466
+  C:0214H         LINE#         467
+  C:0216H         LINE#         469
+  C:0219H         LINE#         470
+  C:021CH         LINE#         471
+  C:021FH         LINE#         472
+  C:0222H         LINE#         473
+  C:0225H         LINE#         476
+  C:0227H         LINE#         477
+  C:0229H         LINE#         478
+  C:022BH         LINE#         479
+  C:022DH         LINE#         480
+  C:022FH         LINE#         481
+  C:0231H         LINE#         482
+  C:0233H         LINE#         483
+  C:0235H         LINE#         484
+  C:0237H         LINE#         487
+  C:023AH         LINE#         488
+  C:023DH         LINE#         489
+  C:0240H         LINE#         490
+  C:0243H         LINE#         491
+  C:0246H         LINE#         494
+  C:0248H         LINE#         495
+  C:024AH         LINE#         496
+  C:024CH         LINE#         497
+  C:024EH         LINE#         498
+  C:0250H         LINE#         499
+  C:0252H         LINE#         500
+  C:0254H         LINE#         501
+  C:0256H         LINE#         502
+  C:0258H         LINE#         505
+  C:025BH         LINE#         506
+  C:025EH         LINE#         507
+  C:0261H         LINE#         508
+  C:0264H         LINE#         509
+  C:0267H         LINE#         511
+  C:0268H         LINE#         516
+  C:0269H         LINE#         521
   -------         ENDMOD        PROJECT_SOURCE
 
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

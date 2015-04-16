@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     1
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     1
 
 
 MACRO ASSEMBLER A51 V6.02
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
   00DB          +1    56     sfr I2ADR  = 0xDB;
   00D8          +1    57     sfr I2CON  = 0xD8;
   00DA          +1    58     sfr I2DAT  = 0xDA;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     2
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     2
 
   00DD          +1    59     sfr I2SCLH = 0xDD;
   00DC          +1    60     sfr I2SCLL = 0xDC;
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
   00D2          +1   122     sbit OV   = PSW^2;
   00D1          +1   123     sbit F1   = PSW^1;
   00D0          +1   124     sbit P    = PSW^0;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     3
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     3
 
                 +1   125     
                 +1   126     
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
   0087          +1   188     sbit T1 = P0^7;
   0086          +1   189     sbit KB6 = P0^6; // alternatively "CMP1"
                 +1   190     
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     4
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     4
 
   0085          +1   191     sbit KB5 = P0^5;
   0084          +1   192     sbit KB4 = P0^4;
@@ -269,7 +269,7 @@ LOC  OBJ            LINE     SOURCE
                 +1   254     
                 +1   255     
                 +1   256     
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     5
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     5
 
                 +1   257     
                 +1   258     
@@ -337,7 +337,7 @@ LOC  OBJ            LINE     SOURCE
 001D 120114          320             lcall transition_left   ; Play a transition
 0020 C003            321             push 03h                ; Store the count
                      322     
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     6
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     6
 
 0022 120171          323             lcall malick_feature    ; Call the function
                      324     
@@ -351,7 +351,7 @@ LOC  OBJ            LINE     SOURCE
 0030 120114          332             lcall transition_left   ;
 0033 C003            333             push 03h                ; Store the count
                      334     
-0035 1201DC          335             lcall owen_feature      ;
+0035 1201E3          335             lcall owen_feature      ;
                      336     
 0038 D003            337             pop 03h                 ; Restore the count
 003A 1200F5          338             lcall transition_right  ;
@@ -363,7 +363,7 @@ LOC  OBJ            LINE     SOURCE
 0043 120114          344             lcall transition_left   ;
 0046 C003            345             push 03h                ; Store the count
                      346     
-0048 120261          347             lcall judah_feature     ;
+0048 120268          347             lcall judah_feature     ;
                      348     
 004B D003            349             pop 03h                 ; Restore the count
 004D 1200F5          350             lcall transition_right  ;
@@ -374,7 +374,7 @@ LOC  OBJ            LINE     SOURCE
 0056 120114          355             lcall transition_left   ;
 0059 C003            356             push 03h                ; Store the count
                      357     
-005B 120262          358             lcall drue_feature      ;
+005B 120269          358             lcall drue_feature      ;
                      359     
 005E D003            360             pop 03h                 ; Restore the count
 0060 1200F5          361             lcall transition_right  ;
@@ -405,7 +405,7 @@ LOC  OBJ            LINE     SOURCE
 0079 1200BB          386             lcall led_display_count ;
                      387             
                      388             ;more debouncing
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     7
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     7
 
 007C 1200B2          389             lcall debounce_delay    ;
 007F 22              390             ret                     ;
@@ -473,7 +473,7 @@ LOC  OBJ            LINE     SOURCE
 00B4                 452      debounce_delay_loop0:
 00B4 7BFF            453             mov R3,#255     ; Change this   ;
 00B6                 454      debounce_delay_loop1:          ;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     8
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     8
 
 00B6 DBFE            455             djnz R3,debounce_delay_loop1;
 00B8 DCFA            456             djnz R4,debounce_delay_loop0;
@@ -541,7 +541,7 @@ LOC  OBJ            LINE     SOURCE
                      518     ;end of third_sec_delay
                      519     
                      520     ;start of transition_right
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE     9
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE     9
 
 00F5                 521     transition_right:               ;
                      522     
@@ -609,7 +609,7 @@ LOC  OBJ            LINE     SOURCE
 015D                 584     clr_screen:
 015D 12013A          585             lcall col1_off          ;
 0160 120148          586             lcall col2_off          ;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    10
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    10
 
 0163 120156          587             lcall col3_off          ;
 0166 22              588             ret                     ;
@@ -643,7 +643,7 @@ LOC  OBJ            LINE     SOURCE
                      616     
                      617      
 0185 208303          618             jb p0.3,skip_go_slower  ;
-0188 1201D9          619             lcall go_slower         ;
+0188 1201DF          619             lcall go_slower         ;
 018B                 620      skip_go_slower:                ;
                      621     
 018B 20A101          622             jb p2.1,skip_exit
@@ -666,20 +666,20 @@ LOC  OBJ            LINE     SOURCE
 01A6 1201C8          639             lcall malick_delay;
 01A9 D285            640             setb p0.5
                      641             
-01AB 80C6            642             sjmp circle;
+01AB 80C6            642             sjmp circle
                      643     
-01AD 22              644             ret                     ;
+01AD 22              644             ret                     
                      645     ;end of malick_feature
                      646     
                      647     
                      648     ;Check Upper Lights
 01AE                 649     check_up:
                      650     
-01AE 20A409          651             jb p2.4, out1
+01AE 30A409          651             jnb p2.4, out1
 01B1 12009A          652             lcall buzz;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    11
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    11
 
-01B4 208503          653             jb p0.5, out1
+01B4 308503          653             jnb p0.5, out1
 01B7 12009A          654             lcall buzz;
 01BA                 655     out1:
 01BA 22              656             ret
@@ -689,9 +689,9 @@ LOC  OBJ            LINE     SOURCE
                      660     ;Check Lower Lights
 01BB                 661     check_down:
                      662     
-01BB 208609          663             jb p0.6, out2
+01BB 308609          663             jnb p0.6, out2
 01BE 12009A          664             lcall buzz;
-01C1 209603          665             jb p1.6, out2
+01C1 309603          665             jnb p1.6, out2
 01C4 12009A          666             lcall buzz;
 01C7                 667     out2:
 01C7 22              668             ret
@@ -715,111 +715,117 @@ LOC  OBJ            LINE     SOURCE
                      686     
                      687     ;beginning of go_faster 
 01D5                 688     go_faster:
-01D5 BFFF00          689             cjne R7,#255,dont_change
-01D8                 690     dont_change:
-01D8 22              691             ret
-                     692     ;end of go_faster
-                     693     
-                     694     ;beginning of go_slower
-01D9                 695     go_slower:
-01D9 DF00            696             djnz R7,never_mind
-01DB                 697     never_mind:
-01DB 22              698             ret
-                     699     ;end of go_slower
-                     700     
-                     701     
-                     702     ;start of owen_feature
-01DC                 703     owen_feature:                   ;
-                     704     
-                     705             ;output 'O'
-01DC C2A4            706             clr p2.4                ;
-01DE C286            707             clr p0.6                ;
-01E0 C2A5            708             clr p2.5                ;
-01E2 C285            709             clr p0.5                ;
-01E4 D296            710             setb p1.6               ;
-01E6 C287            711             clr p0.7                ;
-01E8 C2A7            712             clr p2.7                ;
-01EA C284            713             clr p0.4                ;
-01EC C2A6            714             clr p2.6                ;
-                     715     
-01EE 1200E8          716             lcall third_sec_delay   ;
-01F1 1200E8          717             lcall third_sec_delay   ;
-01F4 1200E8          718             lcall third_sec_delay   ;
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    12
+01D5 BFFF01          689             cjne R7,#255,change
+01D8 22              690             ret     
+01D9                 691     change:
+01D9 EF              692             mov A,R7
+01DA 7B01            693             mov R3,#01
+01DC 2B              694             ADD A,R3
+01DD FF              695             mov R7,A
+01DE 22              696             ret
+                     697     ;end of go_faster
+                     698     
+                     699     ;beginning of go_slower
+01DF                 700     go_slower:
+01DF DF01            701             djnz R7,good
+01E1 22              702             ret
+01E2                 703     good:
+01E2 22              704             ret
+                     705     ;end of go_slower
+                     706     
+                     707     
+                     708     ;start of owen_feature
+01E3                 709     owen_feature:                   ;
+                     710     
+                     711             ;output 'O'
+01E3 C2A4            712             clr p2.4                ;
+01E5 C286            713             clr p0.6                ;
+01E7 C2A5            714             clr p2.5                ;
+01E9 C285            715             clr p0.5                ;
+01EB D296            716             setb p1.6               ;
+01ED C287            717             clr p0.7                ;
+01EF C2A7            718             clr p2.7                ;
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    12
 
-01F7 12015D          719             lcall clr_screen        ;
-01FA 1200E8          720             lcall third_sec_delay   ;
+01F1 C284            719             clr p0.4                ;
+01F3 C2A6            720             clr p2.6                ;
                      721     
-                     722             ;output 'W'
-01FD C2A4            723             clr p2.4                ;
-01FF C286            724             clr p0.6                ;
-0201 C2A5            725             clr p2.5                ;
-0203 D285            726             setb p0.5               ;
-0205 C296            727             clr p1.6                ;
-0207 C287            728             clr p0.7                ;
-0209 C2A7            729             clr p2.7                ;
-020B C284            730             clr p0.4                ;
-020D C2A6            731             clr p2.6                ;
-                     732     
-020F 1200E8          733             lcall third_sec_delay   ;
-0212 1200E8          734             lcall third_sec_delay   ;
-0215 1200E8          735             lcall third_sec_delay   ;
-0218 12015D          736             lcall clr_screen        ;
-021B 1200E8          737             lcall third_sec_delay   ;
-                     738             
-                     739             ;output 'E'
-021E C2A4            740             clr p2.4                ;
-0220 C286            741             clr p0.6                ;
-0222 C2A5            742             clr p2.5                ;
-0224 C285            743             clr p0.5                ;
-0226 C296            744             clr p1.6                ;
-0228 C287            745             clr p0.7                ;
-022A C2A7            746             clr p2.7                ;
-022C D284            747             setb p0.4               ;
-022E C2A6            748             clr p2.6                ;
-                     749     
-                     750     
-0230 1200E8          751             lcall third_sec_delay   ;
-0233 1200E8          752             lcall third_sec_delay   ;
-0236 1200E8          753             lcall third_sec_delay   ;
-0239 12015D          754             lcall clr_screen        ;
-023C 1200E8          755             lcall third_sec_delay   ;               
+01F5 1200E8          722             lcall third_sec_delay   ;
+01F8 1200E8          723             lcall third_sec_delay   ;
+01FB 1200E8          724             lcall third_sec_delay   ;
+01FE 12015D          725             lcall clr_screen        ;
+0201 1200E8          726             lcall third_sec_delay   ;
+                     727     
+                     728             ;output 'W'
+0204 C2A4            729             clr p2.4                ;
+0206 C286            730             clr p0.6                ;
+0208 C2A5            731             clr p2.5                ;
+020A D285            732             setb p0.5               ;
+020C C296            733             clr p1.6                ;
+020E C287            734             clr p0.7                ;
+0210 C2A7            735             clr p2.7                ;
+0212 C284            736             clr p0.4                ;
+0214 C2A6            737             clr p2.6                ;
+                     738     
+0216 1200E8          739             lcall third_sec_delay   ;
+0219 1200E8          740             lcall third_sec_delay   ;
+021C 1200E8          741             lcall third_sec_delay   ;
+021F 12015D          742             lcall clr_screen        ;
+0222 1200E8          743             lcall third_sec_delay   ;
+                     744             
+                     745             ;output 'E'
+0225 C2A4            746             clr p2.4                ;
+0227 C286            747             clr p0.6                ;
+0229 C2A5            748             clr p2.5                ;
+022B C285            749             clr p0.5                ;
+022D C296            750             clr p1.6                ;
+022F C287            751             clr p0.7                ;
+0231 C2A7            752             clr p2.7                ;
+0233 D284            753             setb p0.4               ;
+0235 C2A6            754             clr p2.6                ;
+                     755     
                      756     
-                     757             ;output 'N'
-023F C2A4            758             clr p2.4                ;
-0241 C286            759             clr p0.6                ;
-0243 C2A5            760             clr p2.5                ;
-0245 C285            761             clr p0.5                ;
-0247 D296            762             setb p1.6               ;
-0249 D287            763             setb p0.7               ;
-024B C2A7            764             clr p2.7                ;
-024D C284            765             clr p0.4                ;
-024F C2A6            766             clr p2.6                ;
-                     767     
-                     768     
-0251 1200E8          769             lcall third_sec_delay   ;
-0254 1200E8          770             lcall third_sec_delay   ;
-0257 1200E8          771             lcall third_sec_delay   ;
-025A 12015D          772             lcall clr_screen        ;
-025D 1200E8          773             lcall third_sec_delay   ;
-                     774             
-0260 22              775             ret                     ;
-                     776     ;end of owen_feature
-                     777     
-                     778     ;start of judah_feature         ;
-0261                 779     judah_feature:
-0261 22              780             ret                     ;
-                     781     ;end of judah_feature           ;
-                     782     
-                     783     ;start of drue_feature          ;
-0262                 784     drue_feature:
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    13
+0237 1200E8          757             lcall third_sec_delay   ;
+023A 1200E8          758             lcall third_sec_delay   ;
+023D 1200E8          759             lcall third_sec_delay   ;
+0240 12015D          760             lcall clr_screen        ;
+0243 1200E8          761             lcall third_sec_delay   ;               
+                     762     
+                     763             ;output 'N'
+0246 C2A4            764             clr p2.4                ;
+0248 C286            765             clr p0.6                ;
+024A C2A5            766             clr p2.5                ;
+024C C285            767             clr p0.5                ;
+024E D296            768             setb p1.6               ;
+0250 D287            769             setb p0.7               ;
+0252 C2A7            770             clr p2.7                ;
+0254 C284            771             clr p0.4                ;
+0256 C2A6            772             clr p2.6                ;
+                     773     
+                     774     
+0258 1200E8          775             lcall third_sec_delay   ;
+025B 1200E8          776             lcall third_sec_delay   ;
+025E 1200E8          777             lcall third_sec_delay   ;
+0261 12015D          778             lcall clr_screen        ;
+0264 1200E8          779             lcall third_sec_delay   ;
+                     780             
+0267 22              781             ret                     ;
+                     782     ;end of owen_feature
+                     783     
+                     784     ;start of judah_feature         ;
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    13
 
-0262 22              785             ret                     ;
-                     786     ;end of drue_feature            ;
-                     787     
-                     788     end
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    14
+0268                 785     judah_feature:
+0268 22              786             ret                     ;
+                     787     ;end of judah_feature           ;
+                     788     
+                     789     ;start of drue_feature          ;
+0269                 790     drue_feature:
+0269 22              791             ret                     ;
+                     792     ;end of drue_feature            ;
+                     793     
+                     794     end
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    14
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -855,6 +861,7 @@ CCCRA. . . . . . . .  N NUMB   00EAH   A
 CCCRB. . . . . . . .  N NUMB   00EBH   A   
 CCCRC. . . . . . . .  N NUMB   00ECH   A   
 CCCRD. . . . . . . .  N NUMB   00EDH   A   
+CHANGE . . . . . . .  C ADDR   01D9H   A   
 CHECK_DOWN . . . . .  C ADDR   01BBH   A   
 CHECK_UP . . . . . .  C ADDR   01AEH   A   
 CIRCLE . . . . . . .  C ADDR   0173H   A   
@@ -879,15 +886,14 @@ DEEADR . . . . . . .  N NUMB   00F3H   A
 DEECON . . . . . . .  N NUMB   00F1H   A   
 DEEDAT . . . . . . .  N NUMB   00F2H   A   
 DIVM . . . . . . . .  N NUMB   0095H   A   
-DONT_CHANGE. . . . .  C ADDR   01D8H   A   
 DPH. . . . . . . . .  N NUMB   0083H   A   
 DPL. . . . . . . . .  N NUMB   0082H   A   
-DRUE_FEATURE . . . .  C ADDR   0262H   A   
+DRUE_FEATURE . . . .  C ADDR   0269H   A   
 EA . . . . . . . . .  B ADDR   00A8H.7 A   
 EBO. . . . . . . . .  B ADDR   00A8H.5 A   
 EC . . . . . . . . .  B ADDR   00E8H.2 A   
 ECCU . . . . . . . .  B ADDR   00E8H.4 A   
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    15
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    15
 
 EI2C . . . . . . . .  B ADDR   00E8H.0 A   
 EIEE . . . . . . . .  B ADDR   00E8H.7 A   
@@ -904,8 +910,9 @@ EX1. . . . . . . . .  B ADDR   00A8H.2 A
 F0 . . . . . . . . .  B ADDR   00D0H.5 A   
 F1 . . . . . . . . .  B ADDR   00D0H.1 A   
 FE . . . . . . . . .  B ADDR   0098H.7 A   
+GOOD . . . . . . . .  C ADDR   01E2H   A   
 GO_FASTER. . . . . .  C ADDR   01D5H   A   
-GO_SLOWER. . . . . .  C ADDR   01D9H   A   
+GO_SLOWER. . . . . .  C ADDR   01DFH   A   
 HLTEN. . . . . . . .  B ADDR   00C8H.5 A   
 HLTRN. . . . . . . .  B ADDR   00C8H.6 A   
 I2ADR. . . . . . . .  N NUMB   00DBH   A   
@@ -936,7 +943,7 @@ IP1. . . . . . . . .  N NUMB   00F8H   A
 IP1H . . . . . . . .  N NUMB   00F7H   A   
 IT0. . . . . . . . .  B ADDR   0088H.0 A   
 IT1. . . . . . . . .  B ADDR   0088H.2 A   
-JUDAH_FEATURE. . . .  C ADDR   0261H   A   
+JUDAH_FEATURE. . . .  C ADDR   0268H   A   
 KB0. . . . . . . . .  B ADDR   0080H.0 A   
 KB1. . . . . . . . .  B ADDR   0080H.1 A   
 KB2. . . . . . . . .  B ADDR   0080H.2 A   
@@ -954,8 +961,7 @@ MALICK_DELAY . . . .  C ADDR   01C8H   A
 MALICK_FEATURE . . .  C ADDR   0171H   A   
 MISO . . . . . . . .  B ADDR   00A0H.3 A   
 MOSI . . . . . . . .  B ADDR   00A0H.2 A   
-NEVER_MIND . . . . .  C ADDR   01DBH   A   
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    16
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    16
 
 OCA. . . . . . . . .  B ADDR   00A0H.6 A   
 OCB. . . . . . . . .  B ADDR   0090H.6 A   
@@ -972,7 +978,7 @@ OCRDL. . . . . . . .  N NUMB   00FEH   A
 OUT1 . . . . . . . .  C ADDR   01BAH   A   
 OUT2 . . . . . . . .  C ADDR   01C7H   A   
 OV . . . . . . . . .  B ADDR   00D0H.2 A   
-OWEN_FEATURE . . . .  C ADDR   01DCH   A   
+OWEN_FEATURE . . . .  C ADDR   01E3H   A   
 P. . . . . . . . . .  B ADDR   00D0H.0 A   
 P0 . . . . . . . . .  N NUMB   0080H   A   
 P0M1 . . . . . . . .  N NUMB   0084H   A   
@@ -1023,7 +1029,7 @@ SKIP_CHECK_UP. . . .  C ADDR   0179H   A
 SKIP_DEC . . . . . .  C ADDR   001AH   A   
 SKIP_DRUE. . . . . .  C ADDR   0066H   A   
 SKIP_EXIT. . . . . .  C ADDR   018FH   A   
-A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:10:43 PAGE    17
+A51 MACRO ASSEMBLER  PROJECT_SOURCE                                                       04/15/2015 21:28:30 PAGE    17
 
 SKIP_GO_FASTER . . .  C ADDR   0185H   A   
 SKIP_GO_SLOWER . . .  C ADDR   018BH   A   
