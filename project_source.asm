@@ -577,7 +577,7 @@ holdNote:
  
   loop_holdnote_1:
 				
-	 mov R5, #ref_tempo_low_byt		;//Inner Loop is 488/2 = 244
+	 mov R5, #ref_tempo_low_byte		;//Inner Loop is 488/2 = 244
  
    loop_holdnote_2:
 
