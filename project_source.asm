@@ -552,7 +552,7 @@ generate_pitch:
  
   	loop_genpitch_0:				
  
-   	 loopg1:				
+   	 loop_genpitch_1:				
 
    	 djnz R7, loop_genpitch_1	;//lowbyte of period pitch
 
@@ -579,7 +579,7 @@ holdNote:
 				
 	 mov R5, #244		;//Inner Loop is 488/2 = 244
  
-   looph2:
+   loop_holdnote_2:
 
    lcall generate_pitch		;							
 
@@ -621,7 +621,7 @@ restNote:
 				
 	 mov R5, #244			;//Inner Loop is 488/2 = 244
  
-   loopr2:				
+   loop_restnote_2:				
 
    djnz R5, loop_restnote_2		;
 
