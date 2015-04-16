@@ -379,9 +379,9 @@ check_buttons:
 	lcall go_slower		;
  skip_go_slower:		;
 
-	jb EXIT_BUTTON,skip_exit
+	jb EXIT_BUTTON,skip_exit2
 	ret
-skip_exit:
+skip_exit2:
 
 ret
 
