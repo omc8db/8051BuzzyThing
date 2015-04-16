@@ -331,23 +331,27 @@ circle:
 ;check for buttons
 
 	lcall check_buttons
+	jb EXIT_BUTTON,skip_exit
+	ret
+skip_exit:
 
 	;Light up LEDs in a circle
 	clr LED1_RED
 	lcall malick_delay;
 	setb LED1_RED
-
+	lcall malick_delay;
 	clr LED2_AMB
 	lcall malick_delay;
 	setb LED2_AMB
-
+	lcall malick_delay;
 	clr LED5_RED
 	lcall malick_delay;
 	setb LED5_RED
+	lcall malick_delay;
 	clr LED4_YEL
 	lcall malick_delay;
 	setb LED4_YEL
-	
+	lcall malick_delay;
 	sjmp circle
 
 	ret			
@@ -375,9 +379,9 @@ check_buttons:
 	lcall go_slower		;
  skip_go_slower:		;
 
-	jb EXIT_BUTTON,skip_exit
+	jb EXIT_BUTTON,skip_exit2
 	ret
-skip_exit:
+skip_exit2:
 
 ret
 
@@ -437,9 +441,10 @@ change:
 
 ;beginning of go_faster
 go_faster:
-	djnz R7,good
+	cjne R7,#00,keep_going
 	ret
-good:
+keep_going:	
+	DEC R7
 	ret
 ;end of go_faster
 
